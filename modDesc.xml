@@ -28,4 +28,18 @@ Manage your Farming Simulator 2022 server easily.
     <extraSourceFiles>
         <sourceFile filename="scripts/main.lua" />
     </extraSourceFiles>
+
+    <inputBinding>
+        <actionBinding action="AdminTools_openMenu">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_f9" />
+        </actionBinding>
+    </inputBinding>
+
+    <actions>
+        <action name="AdminTools_openMenu" />
+    </actions>
+
+    <l10n>
+        <text name="input_AdminTools_openMenu"><en>Open Admin Tools</en><de>Admin Tools öffnen</de></text>
+    </l10n>
 </modDesc>
