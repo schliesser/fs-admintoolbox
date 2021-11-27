@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="61">
+    <author>schliesser</author>
+    <version>1.0.0.0</version>
+    <title>
+        <en>Admin Tools</en>
+    </title>
+    <description>
+        <en><![CDATA[Admin Tools
+
+Manage your Farming Simulator 2022 server easily.
+
+- Set credit limit
+- Add/Remove money from farms
+- Open/Close store
+- Restrict store to selected farms
+- Enable/Disable vehicle leasing in the store
+- Enable/Disable vehicle renting for missions
+- Enable/Disable sleeping
+- Enable/Disable AI helpers
+- Enable/Disable missions
+- Set mission rewards]]></en>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+    <multiplayer supported="true"/>
+    <extraSourceFiles>
+        <sourceFile filename="src/main.lua" />
+    </extraSourceFiles>
+</modDesc>
