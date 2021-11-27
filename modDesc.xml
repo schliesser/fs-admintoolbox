@@ -19,11 +19,13 @@ Manage your Farming Simulator 2022 server easily.
 - Enable/Disable sleeping
 - Enable/Disable AI helpers
 - Enable/Disable missions
-- Set mission rewards]]></en>
+- Set mission rewards
+- Set max time speed
+- Set player running]]></en>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
     <extraSourceFiles>
-        <sourceFile filename="src/main.lua" />
+        <sourceFile filename="scripts/main.lua" />
     </extraSourceFiles>
 </modDesc>
