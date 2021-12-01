@@ -13,6 +13,7 @@ Manage your Farming Simulator 2022 server easily.
 - Set credit limit
 - Add/Remove money from farms
 - Open/Close store
+- Set Store opening/closing hours
 - Restrict store to selected farms
 - Enable/Disable vehicle leasing in the store
 - Enable/Disable vehicle renting for missions
@@ -25,21 +26,21 @@ Manage your Farming Simulator 2022 server easily.
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
+
+    <l10n filenamePrefix="l10n"/>
+
     <extraSourceFiles>
-        <sourceFile filename="scripts/main.lua" />
+        <sourceFile filename="scripts/main.lua"/>
     </extraSourceFiles>
 
     <inputBinding>
-        <actionBinding action="AdminTools_openMenu">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_f9" />
+        <actionBinding action="ADT_MENU">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_f9"/>
         </actionBinding>
     </inputBinding>
 
     <actions>
-        <action name="AdminTools_openMenu" />
+        <action name="ADT_MENU" category="SYSTEM" axisType="HALF" locked="true" displayCategory="GAME"/>
     </actions>
 
-    <l10n>
-        <text name="input_AdminTools_openMenu"><en>Open Admin Tools</en><de>Admin Tools öffnen</de></text>
-    </l10n>
 </modDesc>

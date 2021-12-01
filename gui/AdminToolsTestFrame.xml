@@ -4,7 +4,7 @@
         <!-- Static page header -->
         <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel">
             <GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" />
-            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="Admin Tools"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="$l10n_ADT_frameTest"/>
         </GuiElement>
 
         <!-- Layouted settings box -->
@@ -17,9 +17,9 @@
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="l10n_setting_helpWindow"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ADT_optionCheck"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="l10n_toolTip_autoHelp" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ADT_toolTipCheck" />
                 </GuiElement>
 
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="Subtitle" />
@@ -28,9 +28,9 @@
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="l10n_setting_moneyUnit"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ADT_optionMulti"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="l10n_toolTip_moneyUnit" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ADT_toolTipMulti" />
                 </GuiElement>
 
             </GuiElement>

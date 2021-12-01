@@ -42,18 +42,22 @@ function AdminTools:load()
     print("load tabbed menu")
     local tabbedMenu = AdminToolsTabbedMenu:new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
     print("Load Testframe")
-    local testFrame = AdminToolsTestFrame.new()
+    local testFrame = AdminToolsTestFrame.new(nil, g_i18n)
 
     print("Load GUI")
     if g_gui ~= nil then
         g_gui:loadGui(self.baseDirectory .. "gui/AdminToolsTestFrame.xml", "AdminToolsTestFrame", testFrame, true)
         g_gui:loadGui(self.baseDirectory .. "gui/AdminToolsTabbedMenu.xml", "AdminToolsTabbedMenu", tabbedMenu)
     end
+
+    self.isEnabled = true
 end
 
 function AdminTools:onInputOpenMenu(_, inputValue)
+    print("Toggle Menu")
     if self.isEnabled and not g_gui:getIsGuiVisible() then
-        self.adminToolsGui = g_gui:showGui("AdminTools")
+        print("Show gui")
+        self.adminToolsGui = g_gui:showGui("AdminToolsTabbedMenu")
     end
 end
 
@@ -77,6 +81,9 @@ function initAdminTools(name)
             source(modDir .. "scripts/gui/AdminToolsTestFrame.lua");
 
             FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, loadMapFinished)
+
+            FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents, registerActionEvents)
+            BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents, unregisterActionEvents)
         end
 
         print("  Initialized Admin Tools")
@@ -91,8 +98,8 @@ end
 
 function registerActionEvents()
     if g_dedicatedServerInfo == nil and g_adminTools ~= nil then
-        local _, eventId = g_inputBinding:registerActionEvent(InputAction.AdminTools_openMenu, g_adminTools, g_adminTools.onInputOpenMenu, false, true, false, true)
-        g_inputBinding:setActionEventTextVisibility(eventId, false)
+        local _, eventId = g_inputBinding:registerActionEvent(InputAction.ADT_MENU, g_adminTools, g_adminTools.onInputOpenMenu, false, true, false, true)
+        -- g_inputBinding:setActionEventTextVisibility(eventId, false)
         g_adminTools.eventIdOpenMenu = eventId
     end
 end
