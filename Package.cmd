@@ -1,6 +1,6 @@
 @ECHO off
 
-SET modName=FS22_AdminTools
+SET modName=FS22_AdminToolBox
 SET filename=%modName%.zip
 
 IF EXIST %filename% (

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>schliesser</translationContributors>
+
+    <texts>
+        <text name="input_ATB_MENU" text="Open Admin Tools" />
+        <text name="ATB_frameTest" text="Admin Tools Test Frame" />
+        <text name="ATB_optionCheck" text="Check" />
+        <text name="ATB_toolTipCheck" text="A simple check box" />
+        <text name="ATB_optionMulti" text="Multi" />
+        <text name="ATB_optionMulti_foo" text="Foo" />
+        <text name="ATB_optionMulti_bar" text="Bar" />
+        <text name="ATB_optionMulti_baz" text="Baz" />
+        <text name="ATB_toolTipMulti" text="A multi value select box" />
+    </texts>
+</l10n>

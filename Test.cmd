@@ -1,7 +1,7 @@
 @ECHO off
 
-SET modName=FS22_AdminTools
-SET gameProfile="D:\Dokumente\My Games\FarmingSimulator2022\"
+SET modName=FS22_AdminToolBox
+SET gameProfile="G:\Dokumente\My Games\FarmingSimulator2022\"
 SET filename=%modName%.zip
 
 IF EXIST %filename% (
@@ -25,7 +25,8 @@ COPY %filename% %gameProfile%mods\
 
 
 ECHO Start game
-start steam://rungameid/1248130
+@REM start steam://rungameid/1248130
+"C:\Program Files (x86)\Steam\steam.exe" -applaunch 1248130 -cheats -autoStartSavegameId 2
 
 @REM Available FS19 start params
 @REM -cheats (enables cheats in the console)

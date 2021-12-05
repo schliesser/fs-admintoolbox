@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI name="atbFarms">
+    <GuiElement type="empty" profile="uiInGameMenuFrame">
+        <!-- Static page header -->
+        <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel">
+            <GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" />
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="Farms"/>
+        </GuiElement>
+
+        <!-- Layouted settings box -->
+        <GuiElement type="empty" profile="ingameMenuSettingsBox" id="settingsContainer">
+            <GuiElement type="bitmap" profile="topScrollClipper" name="topClipper" />
+            <GuiElement type="bitmap" profile="bottomScrollClipper" name="bottomClipper" />
+
+            <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" id="boxLayout" topClipperElementName="topClipper" bottomClipperElementName="bottomClipper">
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="Loan" />
+
+                <!-- See Transfer Money Dialog -->
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="loanMin">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Minimal loan"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Default: 500,000" />
+                </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="loanMax">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Maximum loan"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Default: 3,000,000" />
+                </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="loanRatio">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Loan ratio"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Default: 0.8" />
+                </GuiElement>
+
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="loanIntrestRate">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Loan intrest rate"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Default: 100" />
+                </GuiElement>
+
+                <GuiElement type="text" profile="settingsMenuSubtitle" visible="false" text="Single player farm color" />
+
+                <!-- Button Layout -->
+                <GuiElement type="text" profile="editFarmDialogColorsTitle" text="$l10n_ui_farmColor" />
+
+                <GuiElement type="boxLayout" profile="editFarmDialogColorsLayout" id="colorButtonLayout" />
+
+                <!-- Color Button Template -->
+                <GuiElement type="colorPickButton" profile="shopColorButton" visible="false" onClick="onClickColorButton" onFocus="onFocusColorButton" onLeave="onLeaveColorButton" onHighlight="onFocusColorButton" onHighlightRemove="onLeaveColorButton" id="buttonTemplate" />
+            </GuiElement>
+        </GuiElement>
+
+        <GuiElement type="threePartBitmap" profile="verticalListSliderRightDocked">
+            <GuiElement type="slider" profile="verticalListSliderBar" dataElementId="boxLayout" handleFocus="false" />
+        </GuiElement>
+    </GuiElement>
+</GUI>

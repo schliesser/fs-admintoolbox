@@ -3,44 +3,49 @@
     <author>schliesser</author>
     <version>1.0.0.0</version>
     <title>
-        <en>Admin Tools</en>
+        <en>Admin Tool Box</en>
     </title>
     <description>
-        <en><![CDATA[Admin Tools
+        <en><![CDATA[Admin Tool Box
 
 Manage your Farming Simulator 2022 server easily.
-
-- Set credit limit
-- Add/Remove money from farms
-- Open/Close store
-- Set Store opening/closing hours
-- Restrict store to selected farms
-- Enable/Disable vehicle leasing in the store
-- Enable/Disable vehicle renting for missions
-- Enable/Disable sleeping
-- Enable/Disable AI helpers
-- Enable/Disable missions
-- Set mission rewards
-- Set max time speed
-- Set player running]]></en>
+- General
+    - Enable/Disable sleeping
+    - Enable/Disable AI helpers
+    - Set max time speed
+    - Set player running speed
+    - Set player strengh
+- Store
+    - Open/ Close store
+    - Set Store opening/closing hours
+    - Enable/Disable vehicle leasing in the store
+    - Restrict store to selected farms (idea)
+- Farms
+    - Set credit limit
+    - Add/Remove money from farms
+- Missions
+    - Enable/Disable missions
+    - Enable/Disable vehicle renting for missions
+    - Set mission rewards
+]]></en>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
 
-    <l10n filenamePrefix="l10n"/>
+    <l10n filenamePrefix="l10n/l10n"/>
 
     <extraSourceFiles>
         <sourceFile filename="scripts/main.lua"/>
     </extraSourceFiles>
 
     <inputBinding>
-        <actionBinding action="ADT_MENU">
+        <actionBinding action="ATB_MENU">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_f9"/>
         </actionBinding>
     </inputBinding>
 
     <actions>
-        <action name="ADT_MENU" category="SYSTEM" axisType="HALF" locked="true" displayCategory="GAME"/>
+        <action name="ATB_MENU" category="SYSTEM" axisType="HALF" locked="true" displayCategory="GAME"/>
     </actions>
 
 </modDesc>

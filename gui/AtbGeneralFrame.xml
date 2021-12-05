@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<GUI name="adminToolsTest">
+<GUI name="atbGeneral">
     <GuiElement type="empty" profile="uiInGameMenuFrame">
         <!-- Static page header -->
         <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel">
             <GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" />
-            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="$l10n_ADT_frameTest"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="General"/>
         </GuiElement>
 
         <!-- Layouted settings box -->
@@ -13,26 +13,32 @@
             <GuiElement type="bitmap" profile="bottomScrollClipper" name="bottomClipper" />
 
             <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" id="boxLayout" topClipperElementName="topClipper" bottomClipperElementName="bottomClipper">
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="checkTest">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSleeping">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ADT_optionCheck"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Sleeping"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ADT_toolTipCheck" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable sleeping (Default: on)" />
                 </GuiElement>
 
-                <GuiElement type="text" profile="settingsMenuSubtitle" text="Subtitle" />
-
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="multiTest">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableAi">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ADT_optionMulti"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="AI"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ADT_toolTipMulti" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable AI helpers (Default: on)" />
                 </GuiElement>
 
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSuperStrengh">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Super strengh"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable super strengh (Default: off)" />
+                </GuiElement>
             </GuiElement>
         </GuiElement>
 
