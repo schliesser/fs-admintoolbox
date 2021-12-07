@@ -26,16 +26,16 @@ end
 function AtbTestFrame:copyAttributes(src)
 	AtbTestFrame:superClass().copyAttributes(AtbTestFrame, src)
 
-	AtbTestFrame.l10n = src.l10n
+    self.l10n = src.l10n
 end
 
 function AtbGeneralFrame:initialize()
     print('Init AtbGeneralFrame')
 
-    AtbGeneralFrame.backButtonInfo = {
+    self.backButtonInfo = {
 		inputAction = InputAction.MENU_BACK
 	}
-	AtbGeneralFrame.saveButton = {
+	self.saveButton = {
 		inputAction = InputAction.MENU_ACTIVATE
 	}
 

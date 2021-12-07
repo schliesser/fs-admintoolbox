@@ -8,8 +8,8 @@ AtbTestFrame.CONTROLS = {
 }
 
 function AtbTestFrame.new(subclass_mt, l10n)
-    print("New AtbFrame")
-	local self = AtbTestFrame:superClass().new(nil, subclass_mt or AtbTestFrame_mt)
+    print("New AtbTestFrame")
+	local self =AtbTestFrame:superClass().new(nil, subclass_mt or AtbTestFrame_mt)
 
 	self:registerControls(AtbTestFrame.CONTROLS)
 
@@ -23,54 +23,53 @@ function AtbTestFrame.new(subclass_mt, l10n)
 end
 
 function AtbTestFrame:copyAttributes(src)
-	AtbTestFrame:superClass().copyAttributes(AtbTestFrame, src)
+	AtbTestFrame:superClass().copyAttributes(self, src)
 
-	AtbTestFrame.l10n = src.l10n
+    self.l10n = src.l10n
 end
 
 function AtbTestFrame:initialize()
-    print('Init AtbFrame')
+    print('Init AtbTestFrame')
 
-    AtbTestFrame.backButtonInfo = {
+    self.backButtonInfo = {
 		inputAction = InputAction.MENU_BACK
 	}
-	AtbTestFrame.saveButton = {
-		showWhenPaused = true,
-		inputAction = InputAction.MENU_ACTIVATE
-	}
+	-- self.saveButton = {
+	-- 	inputAction = InputAction.MENU_ACTIVATE
+	-- }
 
-    AtbTestFrame.checkboxMapping[AtbTestFrame.checkTest] = SettingsModel.SETTING.USE_ACRE
-    AtbTestFrame.optionMapping[AtbTestFrame.multiTest] = SettingsModel.SETTING.MONEY_UNIT
+    self.checkboxMapping[self.checkTest] = SettingsModel.SETTING.USE_ACRE
+    self.optionMapping[self.multiTest] = SettingsModel.SETTING.MONEY_UNIT
 
     local multiTestTexts = {
-		AtbTestFrame.l10n:getText("ATB_optionMulti_foo"),
-		AtbTestFrame.l10n:getText("ATB_optionMulti_bar"),
-		AtbTestFrame.l10n:getText("ATB_optionMulti_baz")
+		self.l10n:getText("ATB_optionMulti_foo"),
+		self.l10n:getText("ATB_optionMulti_bar"),
+		self.l10n:getText("ATB_optionMulti_baz")
 	}
 
-	AtbTestFrame.multiTest:setTexts(multiTestTexts)
+	self.multiTest:setTexts(multiTestTexts)
 end
 
 function AtbTestFrame:onFrameOpen(element)
-    print('OnFrameOpen AtbFrame')
-	AtbTestFrame:superClass().onFrameOpen(AtbTestFrame)
+    print('OnFrameOpen AtbTestFrame')
+	AtbTestFrame:superClass().onFrameOpen(self)
 	--self:updateGeneralSettings()
 
 	-- local isMultiplayer = g_currentMission.missionDynamicInfo.isMultiplayer
 end
 
 function AtbTestFrame:onFrameClose()
-    print('OnFrameClose AtbFrame')
+    print('OnFrameClose AtbTestFrame')
 	-- AtbTestFrame:superClass().onFrameClose(self)
 	--self.settingsModel:saveChanges(SettingsModel.SETTING_CLASS.SAVE_GAMEPLAY_SETTINGS)
 end
 
 function AtbTestFrame:getMainElementSize()
-	return AtbTestFrame.settingsContainer.size
+	return self.settingsContainer.size
 end
 
 function AtbTestFrame:getMainElementPosition()
-	return AtbTestFrame.settingsContainer.absPosition
+	return self.settingsContainer.absPosition
 end
 
 

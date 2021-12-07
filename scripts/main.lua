@@ -12,7 +12,7 @@ Feel free to open a pull reuests for enhancements or bugfixes.
 You are not allowed to sell this mod or a modified version of it.
 ]] ----------------------------------------------------------------------------------------------------
 AdminToolBox = {
-    NAME = "Admin Tool Box",
+    NAME = "AdminToolBox",
     VERSION = 1,
     FILENAME = "AdminToolBox.xml",
     GENERAL = {
@@ -48,43 +48,43 @@ function AdminToolBox:new(isServer, isClient, customEnvironment, baseDirectory)
     end
 
     local self = {}
-    setmetatable(AdminToolBox, AdminToolBox_mt)
+    setmetatable(self, AdminToolBox_mt)
 
     -- todo: read config file
-    AdminToolBox.isServer = isServer
-    AdminToolBox.isClient = isClient
-    AdminToolBox.customEnvironment = customEnvironment
-    AdminToolBox.baseDirectory = baseDirectory
+    self.isServer = isServer
+    self.isClient = isClient
+    self.customEnvironment = customEnvironment
+    self.baseDirectory = baseDirectory
 
-    AdminToolBox.isEnabled = false
+    self.isEnabled = false
 
-    addModEventListener(AdminToolBox)
+    addModEventListener(self)
 
-    return AdminToolBox
+    return self
 end
 
 function AdminToolBox:load()
     print("ATB: Load Settings")
-    AdminToolBox.loadSettings();
+    -- self:loadSettings()
     print("Load Menu")
-    local tabbedMenu = AtbTabbedMenu:new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
+    local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
     print("Load Frames")
     local testFrame = AtbTestFrame.new(nil, g_i18n)
-    local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
+    -- local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
 
     print("Load GUI")
     if g_gui ~= nil then
-        g_gui:loadGui(AdminToolBox.baseDirectory .. "gui/AtbTestFrame.xml", "AtbTestFrame", testFrame, true)
-        g_gui:loadGui(AdminToolBox.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
-        g_gui:loadGui(AdminToolBox.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbTabbedMenu", tabbedMenu)
+        g_gui:loadGui(self.baseDirectory .. "gui/AtbTestFrame.xml", "AtbTestFrame", testFrame, true)
+        -- g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
+        g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
     end
 
-    AdminToolBox.isEnabled = true
+    self.isEnabled = true
 end
 
 function AdminToolBox:onInputOpenMenu(_, inputValue)
-    if AdminToolBox.isEnabled and not g_gui:getIsGuiVisible() then
-        AdminToolBox.atbGui = g_gui:showGui("AtbTabbedMenu")
+    if self.isEnabled and not g_gui:getIsGuiVisible() then
+        self.atbGui = g_gui:showGui("AtbMenu")
     end
 end
 
@@ -176,14 +176,12 @@ function initAdminToolBox(name)
             -- Load menu with frames
             source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
             source(modDir .. "scripts/gui/AtbTestFrame.lua");
-            source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
+            -- source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
 
             FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, loadMapFinished)
 
-            FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents,
-                registerActionEvents)
-            BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents,
-                unregisterActionEvents)
+            FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents, registerActionEvents)
+            BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents, unregisterActionEvents)
         end
 
         print("  Initialized Admin Tool Box")
@@ -199,8 +197,7 @@ end
 function registerActionEvents()
     if g_dedicatedServerInfo == nil and g_adminToolBox ~= nil then
         -- Menu Open
-        local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_adminToolBox,
-            g_adminToolBox.onInputOpenMenu, false, true, false, true)
+        local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_adminToolBox, g_adminToolBox.onInputOpenMenu, false, true, false, true)
         -- g_inputBinding:setActionEventTextVisibility(eventIdOpenMenu, false) -- Hide from help menu
         g_adminToolBox.eventIdOpenMenu = eventIdOpenMenu
     end

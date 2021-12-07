@@ -29,8 +29,8 @@
     <GuiElement type="bitmap" profile="uiElementContainerFullScreenSpanning">
         <GuiElement type="paging" profile="uiInGameMenuPaging" onPageChange="onPageChange" onPageUpdate="onPageUpdate" id="pagingElement">
             <!-- Admin Tools pages -->
-            <GuiElement type="frameReference" ref="atbGeneral" name="atbGeneral" id="pageGeneral"/>
-            <GuiElement type="frameReference" ref="atbTest" name="atbTest" id="pageTest"/>
+            <GuiElement type="frameReference" ref="AtbTest" name="AtbTest" id="pageTest"/>
+            <!-- <GuiElement type="frameReference" ref="AtbGeneral" name="AtbGeneral" id="pageGeneral"/> -->
         </GuiElement>
     </GuiElement>
 
