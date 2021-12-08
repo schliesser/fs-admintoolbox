@@ -8,8 +8,8 @@ AtbSettings.SETTING = {
     GENERAL_VEHICLE_TABBING = "generalVehicleTabbing",
     GENERAL_TIME = "generalTime",
     STORE_ACTIVE = "storeActive",
-    STORE_HOURS_OPEN = "storeHoursOpen",
-    STORE_HOURS_CLOSE = "storeHoursClose",
+    STORE_OPEN_TIME = "storeOpenTime",
+    STORE_CLOSE_TIME = "storeHoursClose",
     STORE_LEASING = "storeLeasing",
     FARM_LOAN_MIN = "farmLoanMin",
     FARM_LOAN_MAX = "farmLoanMax",
@@ -21,6 +21,8 @@ AtbSettings.SETTING = {
     -- Mission rewards
 }
 AtbSettings.MAX_MONEY = 999999999
+AtbSettings.MIN_TIME = 0
+AtbSettings.MAX_TIME = 24
 
 function AtbSettings.new(customMt, messageCenter)
     if customMt == nil then
@@ -44,8 +46,8 @@ function AtbSettings.new(customMt, messageCenter)
 
     -- store
     self[AtbSettings.SETTING.STORE_ACTIVE] = true
-    self[AtbSettings.SETTING.STORE_HOURS_OPEN] = "8:00"
-    self[AtbSettings.SETTING.STORE_HOURS_CLOSE] = "18:00"
+    self[AtbSettings.SETTING.STORE_OPEN_TIME] = AtbSettings.MIN_TIME
+    self[AtbSettings.SETTING.STORE_CLOSE_TIME] = AtbSettings.MAX_TIME
     self[AtbSettings.SETTING.STORE_LEASING] = true
 
     -- farms
@@ -176,11 +178,13 @@ function AtbSettings:loadFromXML(xmlFile)
         -- store
         self:setValue(AtbSettings.SETTING.STORE_ACTIVE, Utils.getNoNil(getXMLBool(xmlFile, key.."store.active"), self[AtbSettings.SETTING.STORE_ACTIVE]))
         self:setValue(AtbSettings.SETTING.STORE_LEASING, Utils.getNoNil(getXMLBool(xmlFile, key.."store.leasing"), self[AtbSettings.SETTING.STORE_LEASING]))
+        self:setValue(AtbSettings.SETTING.STORE_OPEN_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."store.open"), self[AtbSettings.SETTING.STORE_OPEN_TIME]), AtbSettings.MIN_TIME, AtbSettings.MAX_TIME))
+        self:setValue(AtbSettings.SETTING.STORE_CLOSE_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."store.close"), self[AtbSettings.SETTING.STORE_CLOSE_TIME]), AtbSettings.MIN_TIME, AtbSettings.MAX_TIME))
 
         -- farms
         -- todo: make sure min <= max!
-        self:setValue(AtbSettings.SETTING.GENERAL_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."farms.loanMin"), self[AtbSettings.SETTING.GENERAL_TIME]), 0, AtbSettings.MAX_MONEY))
-        self:setValue(AtbSettings.SETTING.GENERAL_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."farms.loanMax"), self[AtbSettings.SETTING.GENERAL_TIME]), 0, AtbSettings.MAX_MONEY))
+        self:setValue(AtbSettings.SETTING.FARM_LOAN_MIN, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."farms.loanMin"), self[AtbSettings.SETTING.FARM_LOAN_MIN]), 0, AtbSettings.MAX_MONEY))
+        self:setValue(AtbSettings.SETTING.FARM_LOAN_MAX, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."farms.loanMax"), self[AtbSettings.SETTING.FARM_LOAN_MAX]), 0, AtbSettings.MAX_MONEY))
 
         -- missions
         self:setValue(AtbSettings.SETTING.MISSIONS_ACTIVE, Utils.getNoNil(getXMLBool(xmlFile, key.."missions.active"), self[AtbSettings.SETTING.MISSIONS_ACTIVE]))
@@ -214,6 +218,8 @@ function AtbSettings:saveToXMLFile(xmlFile)
         -- store
         setXMLBool(xmlFile, key.."store.active", self[AtbSettings.SETTING.STORE_ACTIVE])
         setXMLBool(xmlFile, key.."store.leasing", self[AtbSettings.SETTING.STORE_LEASING])
+		setXMLInt(xmlFile, key.."store.open", self[AtbSettings.SETTING.STORE_OPEN_TIME])
+		setXMLInt(xmlFile, key.."store.close", self[AtbSettings.SETTING.STORE_CLOSE_TIME])
 
         -- farms
         setXMLInt(xmlFile, key.."farms.loanMin", self[AtbSettings.SETTING.FARM_LOAN_MIN])

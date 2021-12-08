@@ -56,6 +56,64 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Maximum Loan"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Must be equal or higher than the minimum amount. (Default: 3,000,000)" />
                 </GuiElement>
+
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="Store settings" />
+
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="storeActive">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store active"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable Store for all players (Default: on)" />
+                </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickTime" id="storeOpenTime">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store opening"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Daily opening hour of the shop (Default: 0:00)" />
+                </GuiElement>
+
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickTime" id="storeCloseTime">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store closing"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Daily closing hour of the shop (Default: 24:00)" />
+                </GuiElement>
+
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="storeLeasing">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store vehicle leasing"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable vehicle leasing in store (Default: on)" />
+                </GuiElement>
+
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="Missions settings" />
+
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="missionsActive">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store active"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable Store for all players (Default: on)" />
+                </GuiElement>
+
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="missionsLeasing">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Missions vehicle leasing"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable vehicle leasing in missions (Default: on)" />
+                </GuiElement>
             </GuiElement>
         </GuiElement>
 
