@@ -58,18 +58,16 @@ function AtbTestFrame:onFrameOpen(element)
 	-- local isMultiplayer = g_currentMission.missionDynamicInfo.isMultiplayer
 end
 
-function AtbTestFrame:onFrameClose()
-    print('OnFrameClose AtbTestFrame')
-	-- AtbTestFrame:superClass().onFrameClose(self)
-	--self.settingsModel:saveChanges(SettingsModel.SETTING_CLASS.SAVE_GAMEPLAY_SETTINGS)
-end
+-- function AtbTestFrame:onFrameClose()
+--     print('OnFrameClose AtbTestFrame')
+-- 	-- AtbTestFrame:superClass().onFrameClose(self)
+-- 	--self.settingsModel:saveChanges(SettingsModel.SETTING_CLASS.SAVE_GAMEPLAY_SETTINGS)
+-- end
 
-function AtbTestFrame:getMainElementSize()
-	return self.settingsContainer.size
-end
+-- function AtbTestFrame:getMainElementSize()
+-- 	return self.settingsContainer.size
+-- end
 
-function AtbTestFrame:getMainElementPosition()
-	return self.settingsContainer.absPosition
-end
-
-
+-- function AtbTestFrame:getMainElementPosition()
+-- 	return self.settingsContainer.absPosition
+-- end

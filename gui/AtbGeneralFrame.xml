@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<GUI name="atbGeneral">
+<GUI name="AtbGeneral">
     <GuiElement type="empty" profile="uiInGameMenuFrame">
         <!-- Static page header -->
         <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel">
             <GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" />
-            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="General"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="Atb General Frame"/>
         </GuiElement>
 
         <!-- Layouted settings box -->

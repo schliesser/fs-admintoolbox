@@ -23,8 +23,8 @@ function AtbGeneralFrame.new(subclass_mt, l10n)
 	return self
 end
 
-function AtbTestFrame:copyAttributes(src)
-	AtbTestFrame:superClass().copyAttributes(AtbTestFrame, src)
+function AtbGeneralFrame:copyAttributes(src)
+	AtbGeneralFrame:superClass().copyAttributes(self, src)
 
     self.l10n = src.l10n
 end
@@ -35,35 +35,37 @@ function AtbGeneralFrame:initialize()
     self.backButtonInfo = {
 		inputAction = InputAction.MENU_BACK
 	}
-	self.saveButton = {
-		inputAction = InputAction.MENU_ACTIVATE
-	}
+	-- self.saveButton = {
+	-- 	inputAction = InputAction.MENU_ACTIVATE
+	-- }
 
-    AtbGeneralFrame.checkboxMapping[AtbGeneralFrame.enableAi] = AdminToolBox.GENERAL.AI
-    AtbGeneralFrame.checkboxMapping[AtbGeneralFrame.enableSleeping] = AdminToolBox.GENERAL.SLEEP
-    AtbGeneralFrame.checkboxMapping[AtbGeneralFrame.enableSuperStrengh] = AdminToolBox.GENERAL.STRENGH
+    self.checkboxMapping[self.enableAi] = AtbSettings.SETTING.GENERAL_AI
+    self.checkboxMapping[self.enableSleeping] = AtbSettings.SETTING.GENERAL_SLEEP
+    self.checkboxMapping[self.enableSuperStrengh] = AtbSettings.SETTING.GENERAL_STRENGH
 end
 
 function AtbGeneralFrame:onFrameOpen(element)
     print('OnFrameOpen AtbGeneralFrame')
-	AtbGeneralFrame:superClass().onFrameOpen(AtbGeneralFrame)
-	AdminToolBox.loadFromXML()
+	AtbGeneralFrame:superClass().onFrameOpen(self)
+    self:updateGeneralSettings()
 
 	-- local isMultiplayer = g_currentMission.missionDynamicInfo.isMultiplayer
 end
 
-function AtbGeneralFrame:onFrameClose()
-    print('OnFrameClose AtbGeneralFrame')
-	AtbGeneralFrame:superClass().onFrameClose(AtbGeneralFrame)
-	AdminToolBox.saveToXMLFile()
+
+function AtbGeneralFrame:updateGeneralSettings()
+	-- self.settingsModel:refresh()
+
+	for element, settingsKey in pairs(self.checkboxMapping) do
+        print(settingsKey)
+		element:setIsChecked(g_adminToolBox.settings:getValue(settingsKey))
+	end
+
+	for element, settingsKey in pairs(self.optionMapping) do
+		-- element:setState(self.settingsModel:getValue(settingsKey))
+	end
 end
 
-function AtbGeneralFrame:getMainElementSize()
-	return AtbGeneralFrame.settingsContainer.size
-end
-
-function AtbGeneralFrame:getMainElementPosition()
-	return AtbGeneralFrame.settingsContainer.absPosition
-end
-
-
+-- function AtbGeneralFrame:onFrameClose()
+--     print('OnFrameClose AtbGeneralFrame')
+-- end

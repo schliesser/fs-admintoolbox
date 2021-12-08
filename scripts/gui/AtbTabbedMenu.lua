@@ -2,8 +2,8 @@ AtbTabbedMenu = {}
 local AtbTabbedMenu_mt = Class(AtbTabbedMenu, TabbedMenu)
 
 AtbTabbedMenu.CONTROLS = {
-    "pageTest",
-    -- "pageGeneral",
+    "pageAtbGeneral",
+    "pageAtbTest",
     "background"
 }
 
@@ -29,10 +29,7 @@ end
 function AtbTabbedMenu:onGuiSetupFinished()
     AtbTabbedMenu:superClass().onGuiSetupFinished(self)
     print("AtbTabbedMenu onGuiSetupFinished")
-    print_r(self.l10n)
 
-    print(self.l10n:getText(AtbTabbedMenu.L10N_SYMBOL.BUTTON_BACK))
-    print(self.l10n:getText(AtbTabbedMenu.L10N_SYMBOL.TOOLTIP_CHECK))
     -- self.messageCenter:subscribe(MessageType.GUI_INGAME_OPEN_TEST_SCREEN, self.openTestScreen, self)
     self.clickBackCallback = self:makeSelfCallback(self.onButtonBack)
     self:setupMenuPages()
@@ -42,8 +39,8 @@ function AtbTabbedMenu:setupMenuPages()
     print("AtbTabbedMenu setupMenuPages")
     self.pageIndex = 1
     self.allowPageSetup = true
-    self:setupPage(self.pageTest, AtbTabbedMenu.TAB_UV.GENERAL_SETTINGS)
-    -- self:setupPage(self.pageGeneral, AtbTabbedMenu.TAB_UV.GAME_SETTINGS)
+    self:setupPage(self.pageAtbGeneral, AtbTabbedMenu.TAB_UV.GAME_SETTINGS)
+    self:setupPage(self.pageAtbTest, AtbTabbedMenu.TAB_UV.GENERAL_SETTINGS)
     self.allowPageSetup = false
 end
 
