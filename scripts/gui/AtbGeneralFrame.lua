@@ -17,7 +17,6 @@ AtbGeneralFrame.CONTROLS = {
 }
 
 function AtbGeneralFrame.new(subclass_mt, l10n)
-    print("New AtbGeneralFrame")
 	local self = AtbGeneralFrame:superClass().new(nil, subclass_mt or AtbGeneralFrame_mt)
 
 	self:registerControls(AtbGeneralFrame.CONTROLS)
@@ -39,8 +38,6 @@ function AtbGeneralFrame:copyAttributes(src)
 end
 
 function AtbGeneralFrame:initialize()
-    print('Init AtbGeneralFrame')
-
     self.backButtonInfo = {
 		inputAction = InputAction.MENU_BACK
 	}
@@ -74,7 +71,6 @@ function AtbGeneralFrame:initialize()
 end
 
 function AtbGeneralFrame:onFrameOpen(element)
-    print('OnFrameOpen AtbGeneralFrame')
 	AtbGeneralFrame:superClass().onFrameOpen(self)
     self:updateSettings()
 end
@@ -95,7 +91,6 @@ function AtbGeneralFrame:updateSettings()
 end
 
 function AtbGeneralFrame:onClickCheckbox(state, element)
-    print("AtbGeneralFrame onClickCheckbox")
 	local settingsKey = self.checkboxMapping[element]
 
 	if settingsKey ~= nil then
@@ -106,7 +101,6 @@ function AtbGeneralFrame:onClickCheckbox(state, element)
 end
 
 function AtbGeneralFrame:onEnterPressed(element)
-    print("AtbGeneralFrame:onEnterPressed")
     local settingsKey = self.inputNumericMapping[element]
     if settingsKey ~= nil then
         local value = tonumber(element.text)
@@ -117,7 +111,7 @@ function AtbGeneralFrame:onEnterPressed(element)
         end
 
         -- loan must be lower than max money constant
-        math.min(value, AtbSettings.MAX_MONEY)
+        value = math.min(value, AtbSettings.MAX_MONEY)
 
         -- min loan must be lower than max loan
         if element.id == AtbGeneralFrame.CONTROLS.FARMS_LOAN_MIN then
@@ -137,17 +131,15 @@ function AtbGeneralFrame:onEnterPressed(element)
 end
 
 function AtbGeneralFrame:onEscPressed(element)
-    print("AtbGeneralFrame:onEscPressed")
-    -- reset value
     local settingsKey = self.inputNumericMapping[element]
+
     if settingsKey ~= nil then
+        -- Reset value
         element:setText(tostring(g_adminToolBox.settings:getValue(settingsKey)))
     end
 end
 
 function AtbGeneralFrame:onClickTime(state, element)
-    -- self.selectedTargetTime = state - 1 + SleepDialog.MIN_TARGET_TIME
-
     local settingsKey = self.optionMapping[element]
 
 	if settingsKey ~= nil then

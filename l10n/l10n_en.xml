@@ -3,10 +3,16 @@
     <translationContributors>schliesser</translationContributors>
 
     <texts>
-        <text name="input_ATB_MENU" text="Open Admin Tools" />
+        <!-- Help menu -->
+        <text name="input_ATB_MENU" text="Open Admin Tool Box" />
+
+        <!-- Shop -->
+        <text name="ATB_shopDialogDisabled" text="The store is disabled." />
+        <text name="ATB_shopDialogClosed" text="The store is currently closed. It will open at %d:00" />
+
+        <!-- Test Frame -->
         <text name="ATB_frameTest" text="Admin Tools Test Frame" />
         <text name="ATB_optionCheck" text="Check" />
-        <text name="ATB_toolTipCheck" text="A simple check box" />
         <text name="ATB_optionMulti" text="Multi" />
         <text name="ATB_optionMulti_foo" text="Foo" />
         <text name="ATB_optionMulti_bar" text="Bar" />

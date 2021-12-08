@@ -17,7 +17,6 @@ AtbTabbedMenu.TAB_UV = {
 
 function AtbTabbedMenu.new(target, messageCenter, l10n, inputManager)
     local self = AtbTabbedMenu:superClass().new(target, AtbTabbedMenu_mt, messageCenter, l10n, inputManager)
-    print("AtbTabbedMenu new")
 
     self:registerControls(AtbTabbedMenu.CONTROLS)
 
@@ -30,7 +29,6 @@ end
 
 function AtbTabbedMenu:onGuiSetupFinished()
     AtbTabbedMenu:superClass().onGuiSetupFinished(self)
-    print("AtbTabbedMenu onGuiSetupFinished")
 
     -- self.messageCenter:subscribe(MessageType.GUI_INGAME_OPEN_TEST_SCREEN, self.openTestScreen, self)
     self.clickBackCallback = self:makeSelfCallback(self.onButtonBack)
@@ -38,7 +36,6 @@ function AtbTabbedMenu:onGuiSetupFinished()
 end
 
 function AtbTabbedMenu:setupMenuPages()
-    print("AtbTabbedMenu setupMenuPages")
     self.pageIndex = 1
     self.allowPageSetup = true
     self:setupPage(self.pageAtbGeneral, AtbTabbedMenu.TAB_UV.GENERAL)
@@ -47,7 +44,6 @@ function AtbTabbedMenu:setupMenuPages()
 end
 
 function AtbTabbedMenu:setupPage(page, icon)
-    print("AtbTabbedMenu setupPage")
     if page ~= nil and self.allowPageSetup then
         -- Call initialize method from page
         page:initialize()
@@ -81,22 +77,12 @@ function AtbTabbedMenu:setupMenuButtonInfo()
     }
 end
 
-function AtbTabbedMenu:onButtonBack()
-    print('Button Back')
-    AtbTabbedMenu:superClass().exitMenu(self)
-end
-
-function AtbTabbedMenu:onClickMenu()
-    self:exitMenu()
-
-    return true
-end
-
 function AtbTabbedMenu:exitMenu()
+    g_adminToolBox:applySettings()
+
     AtbTabbedMenu:superClass().exitMenu(self)
 end
 
 AtbTabbedMenu.L10N_SYMBOL = {
-    TOOLTIP_CHECK = "ATB_toolTipCheck",
     BUTTON_BACK = "button_back"
 }

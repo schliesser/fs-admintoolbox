@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<l10n>
+    <translationContributors>schliesser</translationContributors>
+
+    <texts>
+        <!-- Help menu -->
+        <text name="input_ATB_MENU" text="Admin Tool Box öffnen" />
+
+        <!-- Shop -->
+        <text name="ATB_shopDialogDisabled" text="Der Shop ist deaktiviert." />
+        <text name="ATB_shopDialogClosed" text="Der Shop ist momentan geschlossen. Er öffnet um %d:00 Uhr." />
+    </texts>
+</l10n>

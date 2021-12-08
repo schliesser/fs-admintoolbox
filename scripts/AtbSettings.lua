@@ -23,6 +23,9 @@ AtbSettings.SETTING = {
 AtbSettings.MAX_MONEY = 999999999
 AtbSettings.MIN_TIME = 0
 AtbSettings.MAX_TIME = 24
+AtbSettings.WORKERS_DEFAULT = 10
+AtbSettings.WORKERS_MAX = 32
+
 
 function AtbSettings.new(customMt, messageCenter)
     if customMt == nil then
@@ -37,7 +40,7 @@ function AtbSettings.new(customMt, messageCenter)
 	self.notifyOnChange = false
 
     -- general
-    self[AtbSettings.SETTING.GENERAL_AI] = true
+    self[AtbSettings.SETTING.GENERAL_AI] = AtbSettings.WORKERS_DEFAULT
     self[AtbSettings.SETTING.GENERAL_SLEEP] = true
     self[AtbSettings.SETTING.GENERAL_SPEED] = 100
     self[AtbSettings.SETTING.GENERAL_STRENGH] = false

@@ -101,7 +101,7 @@
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store active"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Missions active"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable Store for all players (Default: on)" />
                 </GuiElement>

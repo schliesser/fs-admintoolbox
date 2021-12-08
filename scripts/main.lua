@@ -2,14 +2,14 @@
 --[[
 Admin Tools for Farming Simulator 2022
 
-Copyright (c) schliesser, 2021
+Copyright (c) -tinte-, 2021
 
 Author: André Buchmann
 Issues: https://github.com/schliesser/fs-admintools/issues
 
 Feel free to open a pull reuests for enhancements or bugfixes.
 
-You are not allowed to sell this mod or a modified version of it.
+You are not allowed to sell this or a modified version of the mod.
 ]] ----------------------------------------------------------------------------------------------------
 AdminToolBox = {}
 local AdminToolBox_mt = Class(AdminToolBox)
@@ -36,20 +36,15 @@ function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)
 end
 
 function AdminToolBox:load()
-    print("ATB: Load Settings")
     self.xml = self:getSettingsFile()
 
-    print("init atb settings")
     self.settings = AtbSettings.new(nil, g_messageCenter)
     self.settings:loadFromXML(self.xml)
 
-    print("Load Menu")
     local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
-    print("Load Frames")
     local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
     local testFrame = AtbTestFrame.new(nil, g_i18n)
 
-    print("Load GUI")
     if g_gui ~= nil then
         g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
         g_gui:loadGui(self.baseDirectory .. "gui/AtbTestFrame.xml", "AtbTestFrame", testFrame, true)
@@ -62,6 +57,73 @@ end
 function AdminToolBox:onInputOpenMenu(_, inputValue)
     if self.isEnabled and not g_gui:getIsGuiVisible() then
         self.atbGui = g_gui:showGui("AtbMenu")
+    end
+end
+
+function AdminToolBox:update(dt)
+    if not self.isEnabled then
+        return
+    end
+    -- Enable/Disable shop menu and handle shop opening hours
+    AtbOverrides:openShop(g_gui.currentGuiName)
+end
+
+function AdminToolBox:initFunctionOverridesOnStartup()
+    -- Enable/Disable store lease button
+    ShopConfigScreen.updateButtons = Utils.prependedFunction(ShopConfigScreen.updateButtons, AtbOverrides.storeLease)
+
+    -- Enable/Disable missions vehicle leasing
+    AbstractFieldMission.hasLeasableVehicles = Utils.overwrittenFunction(AbstractFieldMission.hasLeasableVehicles, AtbOverrides.missionLease)
+
+    -- Enable/Disable sleeping
+    SleepManager.getCanSleep = Utils.overwrittenFunction(SleepManager.getCanSleep, AtbOverrides.getCanSleep)
+end
+
+function AdminToolBox:applySettings()
+    if not self.isEnabled then
+        return
+    end
+
+    local farmChanged = false
+
+    if g_currentMission ~= nil then
+        -- Disable AI
+        -- todo: replace on/off with value change of maxNumHirables workers
+        g_currentMission.disableAIVehicle = not self.settings:getValue(AtbSettings.SETTING.GENERAL_AI)
+        g_currentMission.maxNumHirables = (self.settings:getValue(AtbSettings.SETTING.GENERAL_AI) and AtbSettings.WORKERS_DEFAULT or 0)
+
+        -- Enable/Disable super strength
+        -- todo: On the inital call the player is not yet set. Maybe this needs to be triggered later. Works after opening and closing ATB menu
+        if g_currentMission.player ~= nil then
+            local atbSuperStrengh = self.settings:getValue(AtbSettings.SETTING.GENERAL_STRENGH)
+            local playerSuperStrengh = Utils.getNoNil(g_currentMission.player.superStrengthEnabled, false)
+            if atbSuperStrengh ~= playerSuperStrengh then
+                print(g_currentMission.player:consoleCommandToggleSuperStrongMode())
+            end
+        end
+    end
+
+    -- Override farm loan settings
+    local loanMin = self.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MIN)
+    if loanMin ~= Farm.MIN_LOAN then
+        Farm.MIN_LOAN = loanMin
+        farmChanged = true
+    end
+
+    local loanMax = self.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MAX)
+    if loanMax ~= Farm.MAX_LOAN then
+        Farm.MAX_LOAN = loanMax
+        farmChanged = true
+    end
+
+    -- Update farms
+    if farmChanged then
+        for _, farm in ipairs(g_farmManager.farms) do
+			local farmId = farm.farmId
+			if farmId ~= FarmManager.SPECTATOR_FARM_ID then
+                g_messageCenter:publish(MessageType.FARM_PROPERTY_CHANGED, farmId)
+            end
+        end
     end
 end
 
@@ -79,9 +141,6 @@ function AdminToolBox:getSettingsFile()
     return loadXMLFile(key, path)
 end
 
---[[
-	Returns the file path to the settings file, which is located in the savegame folder.
-]]
 function AdminToolBox:getSettingsFilePath()
     local savegameFolderPath = g_currentMission.missionInfo.savegameDirectory .. "/"
 	if savegameFolderPath == nil then
@@ -107,6 +166,7 @@ function initAdminToolBox(name)
 
             -- Load files
             source(modDir .. "scripts/AtbSettings.lua");
+            source(modDir .. "scripts/AtbOverrides.lua");
 
             -- Load menu with frames
             source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
@@ -126,6 +186,8 @@ end
 function loadMapFinished()
     if g_adminToolBox ~= nil then
         g_adminToolBox:load()
+        g_adminToolBox:initFunctionOverridesOnStartup()
+        g_adminToolBox:applySettings()
     end
 end
 
