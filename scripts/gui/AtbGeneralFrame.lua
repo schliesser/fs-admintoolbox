@@ -66,6 +66,19 @@ function AtbGeneralFrame:updateGeneralSettings()
 	end
 end
 
+function AtbGeneralFrame:onClickCheckbox(state, checkboxElement)
+    print("AtbGeneralFrame onClickCheckbox")
+	local settingsKey = self.checkboxMapping[checkboxElement]
+
+	if settingsKey ~= nil then
+		g_adminToolBox.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED, true)
+
+		-- self.dirty = true
+	else
+		print("Warning: Invalid settings checkbox event or key configuration for element " .. checkboxElement:toString())
+	end
+end
+
 -- function AtbGeneralFrame:onFrameClose()
 --     print('OnFrameClose AtbGeneralFrame')
 -- end

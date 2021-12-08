@@ -26,6 +26,8 @@ function AtbSettings.new(customMt, messageCenter)
     self[AtbSettings.SETTING.GENERAL_SPEED] = 100
     self[AtbSettings.SETTING.GENERAL_TIME] = 1000
 
+    self.printedSettingsChanges = {}
+
     return self
 end
 

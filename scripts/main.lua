@@ -68,6 +68,7 @@ function AdminToolBox:load()
 
     print("init atb settings")
     self.settings = AtbSettings.new(nil, g_messageCenter)
+    self.settings:loadFromXML(self.xml)
 
     print("Load Menu")
     local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
