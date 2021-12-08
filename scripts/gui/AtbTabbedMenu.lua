@@ -8,9 +8,11 @@ AtbTabbedMenu.CONTROLS = {
 }
 
 AtbTabbedMenu.TAB_UV = {
-    GAME_SETTINGS = {650, 0, 65, 65},
-    GENERAL_SETTINGS = {715, 0, 65, 65},
-    CONTROLS_SETTINGS = {845, 0, 65, 65}
+    GENERAL = {715, 0, 65, 65},
+    TEST = {0, 65, 65, 65},
+    FARMS = {260, 65, 65, 65},
+    USERS = {650, 65, 65, 65},
+    STORE = {260, 0, 65, 65},
 }
 
 function AtbTabbedMenu.new(target, messageCenter, l10n, inputManager)
@@ -39,8 +41,8 @@ function AtbTabbedMenu:setupMenuPages()
     print("AtbTabbedMenu setupMenuPages")
     self.pageIndex = 1
     self.allowPageSetup = true
-    self:setupPage(self.pageAtbGeneral, AtbTabbedMenu.TAB_UV.GAME_SETTINGS)
-    self:setupPage(self.pageAtbTest, AtbTabbedMenu.TAB_UV.GENERAL_SETTINGS)
+    self:setupPage(self.pageAtbGeneral, AtbTabbedMenu.TAB_UV.GENERAL)
+    -- self:setupPage(self.pageAtbTest, AtbTabbedMenu.TAB_UV.TEST)
     self.allowPageSetup = false
 end
 

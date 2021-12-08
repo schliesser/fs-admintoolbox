@@ -4,7 +4,7 @@
         <!-- Static page header -->
         <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel">
             <GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" />
-            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="Atb General Frame"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="Admin Tool Box"/>
         </GuiElement>
 
         <!-- Layouted settings box -->
@@ -13,14 +13,8 @@
             <GuiElement type="bitmap" profile="bottomScrollClipper" name="bottomClipper" />
 
             <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" id="boxLayout" topClipperElementName="topClipper" bottomClipperElementName="bottomClipper">
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSleeping">
-                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
-                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
-                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Sleeping"/>
-                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable sleeping (Default: on)" />
-                </GuiElement>
+
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="General settings" />
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableAi">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
@@ -31,6 +25,15 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable AI helpers (Default: on)" />
                 </GuiElement>
 
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSleeping">
+                    <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
+                    <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsText" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Sleeping"/>
+                    <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable sleeping (Default: on)" />
+                </GuiElement>
+
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSuperStrengh">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
@@ -38,6 +41,20 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Super strengh"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable super strengh (Default: off)" />
+                </GuiElement>
+
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="Farms settings" />
+
+                <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
+                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMin" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" imeTitle="Minimal Loan" imeDescription="Minimal Loan for farms (Default: 500,000)" imePlaceholder="Place Holder lol" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Minimal Loan"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Set minimum loan amount. Set both to 0 to disable loan. (Default: 500,000)" />
+                </GuiElement>
+
+                <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
+                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMax" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" imeTitle="Maximum Loan" imeDescription="Maximum loan for farms (Default: 500,000)" imePlaceholder="Place Holder2 lol" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Maximum Loan"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Must be equal or higher than the minimum amount. (Default: 3,000,000)" />
                 </GuiElement>
             </GuiElement>
         </GuiElement>

@@ -3,10 +3,24 @@ local AtbSettings_mt = Class(AtbSettings)
 AtbSettings.SETTING = {
     GENERAL_AI = "generalAi",
     GENERAL_SLEEP = "generalSleep",
-    GENERAL_STRENGH = "generalStrength",
     GENERAL_SPEED = "generalSpeed",
-    GENERAL_TIME = "generalTime"
+    GENERAL_STRENGH = "generalStrength",
+    GENERAL_VEHICLE_TABBING = "generalVehicleTabbing",
+    GENERAL_TIME = "generalTime",
+    STORE_ACTIVE = "storeActive",
+    STORE_HOURS_OPEN = "storeHoursOpen",
+    STORE_HOURS_CLOSE = "storeHoursClose",
+    STORE_LEASING = "storeLeasing",
+    FARM_LOAN_MIN = "farmLoanMin",
+    FARM_LOAN_MAX = "farmLoanMax",
+    MISSIONS_ACTIVE = "missionsActive",
+    MISSIONS_LEASING = "missionsLeasing",
+    MISSIONS_UPDATE_INTERVAL = "missionsUpdateIntveral",
+    MISSIONS_MAX_AVAILABLE = "missionsMaxAvailable",
+    MISSIONS_PER_PLAYER = "missionsPerPlayer",
+    -- Mission rewards
 }
+AtbSettings.MAX_MONEY = 999999999
 
 function AtbSettings.new(customMt, messageCenter)
     if customMt == nil then
@@ -20,11 +34,27 @@ function AtbSettings.new(customMt, messageCenter)
     self.messageCenter = messageCenter
 	self.notifyOnChange = false
 
+    -- general
     self[AtbSettings.SETTING.GENERAL_AI] = true
     self[AtbSettings.SETTING.GENERAL_SLEEP] = true
-    self[AtbSettings.SETTING.GENERAL_STRENGH] = false
     self[AtbSettings.SETTING.GENERAL_SPEED] = 100
+    self[AtbSettings.SETTING.GENERAL_STRENGH] = false
     self[AtbSettings.SETTING.GENERAL_TIME] = 1000
+    self[AtbSettings.SETTING.GENERAL_VEHICLE_TABBING] = true
+
+    -- store
+    self[AtbSettings.SETTING.STORE_ACTIVE] = true
+    self[AtbSettings.SETTING.STORE_HOURS_OPEN] = "8:00"
+    self[AtbSettings.SETTING.STORE_HOURS_CLOSE] = "18:00"
+    self[AtbSettings.SETTING.STORE_LEASING] = true
+
+    -- farms
+    self[AtbSettings.SETTING.FARM_LOAN_MIN] = 500000
+    self[AtbSettings.SETTING.FARM_LOAN_MAX] = 3000000
+
+    -- missions
+    self[AtbSettings.SETTING.MISSIONS_ACTIVE] = true
+    self[AtbSettings.SETTING.MISSIONS_LEASING] = true
 
     self.printedSettingsChanges = {}
 
@@ -134,13 +164,30 @@ end
 
 function AtbSettings:loadFromXML(xmlFile)
 	if xmlFile ~= nil then
-        self:setValue(AtbSettings.SETTING.GENERAL_AI, Utils.getNoNil(getXMLBool(xmlFile, "AdminToolBox.general.ai"), self[AtbSettings.SETTING.GENERAL_AI]))
-        self:setValue(AtbSettings.SETTING.GENERAL_SLEEP, Utils.getNoNil(getXMLBool(xmlFile, "AdminToolBox.general.sleep"), self[AtbSettings.SETTING.GENERAL_SLEEP]))
-        self:setValue(AtbSettings.SETTING.GENERAL_STRENGH, Utils.getNoNil(getXMLBool(xmlFile, "AdminToolBox.general.strengh"), self[AtbSettings.SETTING.GENERAL_STRENGH]))
-        self:setValue(AtbSettings.SETTING.GENERAL_SPEED, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, "AdminToolBox.general.speed"), self[AtbSettings.SETTING.GENERAL_SPEED]), 0, 10))
-        self:setValue(AtbSettings.SETTING.GENERAL_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, "AdminToolBox.general.time"), self[AtbSettings.SETTING.GENERAL_TIME]), 200, 2000))
+        local key = "AdminToolBox."
+        -- general
+        self:setValue(AtbSettings.SETTING.GENERAL_AI, Utils.getNoNil(getXMLBool(xmlFile, key.."general.ai"), self[AtbSettings.SETTING.GENERAL_AI]))
+        self:setValue(AtbSettings.SETTING.GENERAL_SLEEP, Utils.getNoNil(getXMLBool(xmlFile, key.."general.sleep"), self[AtbSettings.SETTING.GENERAL_SLEEP]))
+        self:setValue(AtbSettings.SETTING.GENERAL_SPEED, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."general.speed"), self[AtbSettings.SETTING.GENERAL_SPEED]), 0, 10))
+        self:setValue(AtbSettings.SETTING.GENERAL_STRENGH, Utils.getNoNil(getXMLBool(xmlFile, key.."general.strengh"), self[AtbSettings.SETTING.GENERAL_STRENGH]))
+        self:setValue(AtbSettings.SETTING.GENERAL_VEHICLE_TABBING, Utils.getNoNil(getXMLBool(xmlFile, key.."general.vehicleTabbing"), self[AtbSettings.SETTING.GENERAL_VEHICLE_TABBING]))
+        self:setValue(AtbSettings.SETTING.GENERAL_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."general.time"), self[AtbSettings.SETTING.GENERAL_TIME]), 200, 2000))
 
-        self.notifyOnChange = true
+        -- store
+        self:setValue(AtbSettings.SETTING.STORE_ACTIVE, Utils.getNoNil(getXMLBool(xmlFile, key.."store.active"), self[AtbSettings.SETTING.STORE_ACTIVE]))
+        self:setValue(AtbSettings.SETTING.STORE_LEASING, Utils.getNoNil(getXMLBool(xmlFile, key.."store.leasing"), self[AtbSettings.SETTING.STORE_LEASING]))
+
+        -- farms
+        -- todo: make sure min <= max!
+        self:setValue(AtbSettings.SETTING.GENERAL_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."farms.loanMin"), self[AtbSettings.SETTING.GENERAL_TIME]), 0, AtbSettings.MAX_MONEY))
+        self:setValue(AtbSettings.SETTING.GENERAL_TIME, MathUtil.clamp(Utils.getNoNil(getXMLInt(xmlFile, key.."farms.loanMax"), self[AtbSettings.SETTING.GENERAL_TIME]), 0, AtbSettings.MAX_MONEY))
+
+        -- missions
+        self:setValue(AtbSettings.SETTING.MISSIONS_ACTIVE, Utils.getNoNil(getXMLBool(xmlFile, key.."missions.active"), self[AtbSettings.SETTING.MISSIONS_ACTIVE]))
+        self:setValue(AtbSettings.SETTING.MISSIONS_LEASING, Utils.getNoNil(getXMLBool(xmlFile, key.."missions.leasing"), self[AtbSettings.SETTING.MISSIONS_LEASING]))
+
+
+        -- self.notifyOnChange = true
     end
 end
 
@@ -154,11 +201,29 @@ end
 
 function AtbSettings:saveToXMLFile(xmlFile)
 	if xmlFile ~= nil then
-        setXMLBool(xmlFile, "AdminToolBox.general.ai", self[AtbSettings.SETTING.GENERAL_AI])
-        setXMLBool(xmlFile, "AdminToolBox.general.sleep", self[AtbSettings.SETTING.GENERAL_SLEEP])
-        setXMLBool(xmlFile, "AdminToolBox.general.strengh", self[AtbSettings.SETTING.GENERAL_STRENGH])
-		setXMLInt(xmlFile, "AdminToolBox.general.speed", self[AtbSettings.SETTING.GENERAL_SPEED])
-		setXMLInt(xmlFile, "AdminToolBox.general.time", self[AtbSettings.SETTING.GENERAL_TIME])
+        local key = "AdminToolBox."
+
+        -- general
+        setXMLBool(xmlFile, key.."general.ai", self[AtbSettings.SETTING.GENERAL_AI])
+        setXMLBool(xmlFile, key.."general.sleep", self[AtbSettings.SETTING.GENERAL_SLEEP])
+		setXMLInt(xmlFile, key.."general.speed", self[AtbSettings.SETTING.GENERAL_SPEED])
+        setXMLBool(xmlFile, key.."general.strengh", self[AtbSettings.SETTING.GENERAL_STRENGH])
+        setXMLBool(xmlFile, key.."general.vehicleTabbing", self[AtbSettings.SETTING.GENERAL_VEHICLE_TABBING])
+		setXMLInt(xmlFile, key.."general.time", self[AtbSettings.SETTING.GENERAL_TIME])
+
+        -- store
+        setXMLBool(xmlFile, key.."store.active", self[AtbSettings.SETTING.STORE_ACTIVE])
+        setXMLBool(xmlFile, key.."store.leasing", self[AtbSettings.SETTING.STORE_LEASING])
+
+        -- farms
+        setXMLInt(xmlFile, key.."farms.loanMin", self[AtbSettings.SETTING.FARM_LOAN_MIN])
+        setXMLInt(xmlFile, key.."farms.loanMax", self[AtbSettings.SETTING.FARM_LOAN_MAX])
+
+        -- missions
+        setXMLBool(xmlFile, key.."missions.active", self[AtbSettings.SETTING.MISSIONS_ACTIVE])
+        setXMLBool(xmlFile, key.."missions.leasing", self[AtbSettings.SETTING.MISSIONS_LEASING])
+
+        -- save file
         saveXMLFile(xmlFile)
     end
 end

@@ -11,34 +11,7 @@ Feel free to open a pull reuests for enhancements or bugfixes.
 
 You are not allowed to sell this mod or a modified version of it.
 ]] ----------------------------------------------------------------------------------------------------
-AdminToolBox = {
-    NAME = "AdminToolBox",
-    VERSION = 1,
-    GENERAL = {
-        AI = true,
-        SLEEP = true,
-        STRENGH = false,
-        SPEED = 100,
-        TIME = 1000
-    },
-    STORE = {
-        OPEN = true,
-        HOURS_OPEN = "8:00",
-        HOURS_CLOSE = "18:00",
-        LEASING = true
-    },
-    FARM = {
-        LOAN_MIN = 500000,
-        LOAN_MAX = 3000000
-    },
-    MISSIONS = {
-        ENABLE = true,
-        LEASING = true,
-        REWARDS = {
-            -- Todo: copy base game rewards
-        }
-    }
-}
+AdminToolBox = {}
 local AdminToolBox_mt = Class(AdminToolBox)
 
 function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)

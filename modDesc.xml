@@ -15,6 +15,7 @@ Manage your Farming Simulator 2022 server easily.
     - Set max time speed
     - Set player running speed
     - Set player strengh
+    - Enable/Disable vehicle tabbing
 - Store
     - Open/ Close store
     - Set Store opening/closing hours
@@ -27,6 +28,9 @@ Manage your Farming Simulator 2022 server easily.
     - Enable/Disable missions
     - Enable/Disable vehicle renting for missions
     - Set mission rewards
+    - Max missions per player
+    - Mission update interval
+    - Max available missions
 ]]></en>
     </description>
     <iconFilename>icon.dds</iconFilename>
