@@ -6,8 +6,46 @@
         <!-- Help menu -->
         <text name="input_ATB_MENU" text="Admin Tool Box öffnen" />
 
+        <!-- General Frame -->
+        <text name="ATB_header_general" text="Admin Tool Box" />
+        <text name="ATB_sub_general" text="Allgemeine Einstellungen" />
+        <text name="ATB_sub_store" text="Shop Einstellungen" />
+        <text name="ATB_sub_farms" text="Einstellungen für Höfe" />
+        <text name="ATB_sub_missions" text="Einstellungen für Aufträge" />
+
+        <text name="ATB_title_worker" text="Anzahl KI Arbeiter" />
+        <text name="ATB_tip_worker" text="Anzahl der verfügbaren KI Arbeiter. 0 deaktivert alle KI Arbeiter. (Standard: 10)" />
+
+        <text name="ATB_title_vtab" text="Springen zwischen Fahrzeugen" />
+        <text name="ATB_tip_vtab" text="Springen zwischen Fahrzeugen mit Tab (de)aktivieren. (Standard: An)" />
+
+        <text name="ATB_title_sleep" text="Schlafen" />
+        <text name="ATB_tip_sleep" text="Schlafen (de)aktivieren. (Standard: An)" />
+
+        <text name="ATB_title_strengh" text="Superkraft" />
+        <text name="ATB_tip_strengh" text="Superkraft (de)aktivieren. (Standard: Aus)" />
+
+        <text name="ATB_title_storeActive" text="Shop aktiv" />
+        <text name="ATB_tip_storeActive" text="Shop für alle Spieler an/abschalten (Standard: An)" />
+        <text name="ATB_title_storeOpenTime" text="Ladenöffnung" />
+        <text name="ATB_tip_storeOpenTime" text="Uhrzeit wann der Shop täglich öffnet. (Standard: 0:00)" />
+        <text name="ATB_title_storeCloseTime" text="Ladenschließugn" />
+        <text name="ATB_tip_storeCloseTime" text="Uhrzeit wann der Shop täglich schließt. (Standard: 24:00)" />
+        <text name="ATB_title_storeLeasing" text="Mieten im Shop" />
+        <text name="ATB_tip_storeLeasing" text="Mieten von Fahrzeugen im Shop (de)aktivieren. (Standard: An)" />
+
+        <text name="ATB_title_loanMin" text="Kredit Untergrenze" />
+        <text name="ATB_tip_loanMin" text="Setze den mindestens verfügbaren Kredit. Zum deaktiveren des Kredits beides auf 0 setzen. (Standard: 500,000)" />
+        <text name="ATB_title_loanMax" text="Kredit Obergrenze" />
+        <text name="ATB_tip_loanMax" text="Muss gleich oder höher als die Kredit Untergrenze sein. (Standard: 3,000,000)" />
+
+        <text name="ATB_title_contractLimit" text="Aufträgelimit" />
+        <text name="ATB_tip_contractLimit" text="Setze die maximale Anzahl gleichzeitiger Aufträge pro Hof. (Standard: 3)" />
+        <text name="ATB_title_missionsLeasing" text="Maschinen leihen" />
+        <text name="ATB_tip_missionsLeasing" text="Maschinen der Missionen leihen (de)aktivieren. (Standard: An)" />
+
         <!-- Shop -->
-        <text name="ATB_shopDialogDisabled" text="Der Shop ist deaktiviert." />
-        <text name="ATB_shopDialogClosed" text="Der Shop ist momentan geschlossen. Er öffnet um %d:00 Uhr." />
+        <text name="ATB_storeDialogDisabled" text="Der Shop ist deaktiviert." />
+        <text name="ATB_storeDialogClosed" text="Der Shop ist momentan geschlossen. Er öffnet um %d:00 Uhr." />
     </texts>
 </l10n>

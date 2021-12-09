@@ -21,7 +21,7 @@ function AtbOverrides:openShop(guiName)
     if not g_adminToolBox.settings:getValue(AtbSettings.SETTING.STORE_ACTIVE) then
         g_gui:showGui("")
         g_gui:showInfoDialog({
-            text = g_i18n:getText("ATB_shopDialogDisabled")
+            text = g_i18n:getText("ATB_storeDialogDisabled")
         })
         return
     end
@@ -32,7 +32,7 @@ function AtbOverrides:openShop(guiName)
     if not (g_currentMission.environment.currentHour >= openTime and g_currentMission.environment.currentHour < closeTime ) then
         g_gui:showGui("")
         g_gui:showInfoDialog({
-            text = string.format(g_i18n:getText("ATB_shopDialogClosed"), openTime)
+            text = string.format(g_i18n:getText("ATB_storeDialogClosed"), openTime)
         })
     end
 end

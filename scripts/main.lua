@@ -28,6 +28,8 @@ function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)
     self.customEnvironment = customEnvironment
     self.baseDirectory = baseDirectory
 
+    self:mergeModTranslations(g_i18n)
+
     self.isEnabled = false
 
     addModEventListener(self)
@@ -153,6 +155,18 @@ function AdminToolBox:getSettingsFilePath()
 		savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex .. "/")
 	end
 	return savegameFolderPath .. "adminToolBox.xml"
+end
+
+function AdminToolBox:mergeModTranslations(i18n)
+    -- We can copy all our translations to the global table because we prefix everything with ATB_
+    -- Thanks for blocking the getfenv Giants..
+    local modEnvMeta = getmetatable(_G)
+    local env = modEnvMeta.__index
+
+    local global = env.g_i18n.texts
+    for key, text in pairs(i18n.texts) do
+        global[key] = text
+    end
 end
 
 ----------------------------------------------------------------------------------------------------

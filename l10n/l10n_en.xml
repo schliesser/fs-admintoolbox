@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-    <translationContributors>schliesser</translationContributors>
+    <translationContributors>-tinte-</translationContributors>
 
     <texts>
         <!-- Help menu -->
         <text name="input_ATB_MENU" text="Open Admin Tool Box" />
 
+        <!-- General Frame -->
+        <text name="ATB_header_general" text="Admin Tool Box" />
+        <text name="ATB_sub_general" text="General settings" />
+        <text name="ATB_sub_store" text="Store settings" />
+        <text name="ATB_sub_farms" text="Farms settings" />
+        <text name="ATB_sub_missions" text="Missions settings" />
+
+        <text name="ATB_title_worker" text="Number of AI workers" />
+        <text name="ATB_tip_worker" text="Number of available AI workers. 0 will disable all AI workers (Default: 10)" />
+
+        <text name="ATB_title_vtab" text="Vehicle Tabbing" />
+        <text name="ATB_tip_vtab" text="Enable/disable vehicle tabbing. (Default: on)" />
+
+        <text name="ATB_title_sleep" text="Sleeping" />
+        <text name="ATB_tip_sleep" text="Enable/disable sleeping. (Default: on)" />
+
+        <text name="ATB_title_strengh" text="Super strengh" />
+        <text name="ATB_tip_strengh" text="Enable/disable super strengh. (Default: off)" />
+
+        <text name="ATB_title_storeActive" text="Store active" />
+        <text name="ATB_tip_storeActive" text="Enable/disable Store for all players (Default: on)" />
+        <text name="ATB_title_storeOpenTime" text="Store opening" />
+        <text name="ATB_tip_storeOpenTime" text="Daily opening hour of the shop (Default: 0:00)" />
+        <text name="ATB_title_storeCloseTime" text="Store closing" />
+        <text name="ATB_tip_storeCloseTime" text="Daily closing hour of the shop (Default: 24:00)" />
+        <text name="ATB_title_storeLeasing" text="Store vehicle leasing" />
+        <text name="ATB_tip_storeLeasing" text="Enable/disable vehicle leasing in store. (Default: on)" />
+
+        <text name="ATB_title_loanMin" text="Minimal loan" />
+        <text name="ATB_tip_loanMin" text="Set minimum loan amount. Set both to 0 to disable loan. (Default: 500,000)" />
+        <text name="ATB_title_loanMax" text="Maximum loan" />
+        <text name="ATB_tip_loanMax" text="Must be equal or higher than the minimum amount. (Default: 3,000,000)" />
+
+        <text name="ATB_title_contractLimit" text="Contracts limit" />
+        <text name="ATB_tip_contractLimit" text="Set max number of parallel contracts per farm. (Default: 3)" />
+        <text name="ATB_title_missionsLeasing" text="Missions vehicle leasing" />
+        <text name="ATB_tip_missionsLeasing" text="Enable/disable vehicle leasing in missions. (Default: on)" />
+
         <!-- Shop -->
-        <text name="ATB_shopDialogDisabled" text="The store is disabled." />
-        <text name="ATB_shopDialogClosed" text="The store is currently closed. It will open at %d:00" />
+        <text name="ATB_storeDialogDisabled" text="The store is disabled." />
+        <text name="ATB_storeDialogClosed" text="The store is currently closed. It will open at %d:00" />
     </texts>
 </l10n>

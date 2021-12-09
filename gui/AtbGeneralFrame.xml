@@ -4,7 +4,7 @@
         <!-- Static page header -->
         <GuiElement type="empty" profile="ingameMenuFrameHeaderPanel">
             <GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" />
-            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="Admin Tool Box"/>
+            <GuiElement type="text" profile="ingameMenuFrameHeaderText" text="$l10n_ATB_header_general"/>
         </GuiElement>
 
         <!-- Layouted settings box -->
@@ -14,114 +14,114 @@
 
             <GuiElement type="scrollingLayout" profile="ingameMenuSettingsLayout" id="boxLayout" topClipperElementName="topClipper" bottomClipperElementName="bottomClipper">
 
-                <GuiElement type="text" profile="settingsMenuSubtitle" text="General settings" />
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_general" />
 
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="aiWorkerCount">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Number of AI workers"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_worker"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Number of available AI workers. 0 will disable all AI workers (Default: 10)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_worker" />
                 </GuiElement>
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableVehicleTabbing">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Vehicle Tabbing"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_vtab"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable vehicle tabbing (Default: on)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_vtab" />
                 </GuiElement>
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSleeping">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Sleeping"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_sleep"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable sleeping (Default: on)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_sleep" />
                 </GuiElement>
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSuperStrengh">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Super strengh"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_strengh"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable super strengh (Default: off)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_strengh" />
                 </GuiElement>
 
-                <GuiElement type="text" profile="settingsMenuSubtitle" text="Store settings" />
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_store" />
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="storeActive">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store active"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_storeActive"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable Store for all players (Default: on)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeActive" />
                 </GuiElement>
 
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickTime" id="storeOpenTime">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight" />
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store opening"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_storeOpenTime"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Daily opening hour of the shop (Default: 0:00)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeOpenTime" />
                 </GuiElement>
 
                 <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickTime" id="storeCloseTime">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight" />
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store closing"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_storeCloseTime"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Daily closing hour of the shop (Default: 24:00)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeCloseTime" />
                 </GuiElement>
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="storeLeasing">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Store vehicle leasing"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_storeLeasing"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable vehicle leasing in store (Default: on)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeLeasing" />
                 </GuiElement>
 
-                <GuiElement type="text" profile="settingsMenuSubtitle" text="Farms settings" />
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_farms" />
 
                 <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
                     <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMin" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" imeTitle="Minimal Loan" imeDescription="Minimal Loan for farms (Default: 500,000)" imePlaceholder="Place Holder lol" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Minimal Loan"/>
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Set minimum loan amount. Set both to 0 to disable loan. (Default: 500,000)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_loanMin"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_loanMin" />
                 </GuiElement>
 
                 <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
                     <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMax" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" imeTitle="Maximum Loan" imeDescription="Maximum loan for farms (Default: 500,000)" imePlaceholder="Place Holder2 lol" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Maximum Loan"/>
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Must be equal or higher than the minimum amount. (Default: 3,000,000)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_loanMax"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_loanMax" />
                 </GuiElement>
 
-                <GuiElement type="text" profile="settingsMenuSubtitle" text="Missions settings" />
+                <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_missions" />
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="missionsContractLimit">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Contracts limit"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_contractLimit"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Set max number of parallel contracts per farm (Default: 3)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_contractLimit" />
                 </GuiElement>
 
                 <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="missionsLeasing">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="Missions vehicle leasing"/>
+                    <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_missionsLeasing"/>
                     <GuiElement type="bitmap" profile="multiTextOptionSettingsBg" />
-                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="Enable/disable vehicle leasing in missions (Default: on)" />
+                    <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_missionsLeasing" />
                 </GuiElement>
             </GuiElement>
         </GuiElement>

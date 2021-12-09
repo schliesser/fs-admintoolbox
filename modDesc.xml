@@ -9,6 +9,7 @@
         <en><![CDATA[Admin Tool Box
 
 Manage your Farming Simulator 2022 server easily. Works also in single player mode.
+Initially the defaults of the base game are applied and saved to a file inside the savegame folder.
 
 More features will come with future updates.
 For Bugreports please use: https://github.com/schliesser/fs-admintoolbox/issues
