@@ -40,7 +40,7 @@ end
 -- check if vehicle switching is allowed
 function AtbOverrides:onSwitchVehicle(_, _, directionValue)
     if not self.isPlayerFrozen and self.isRunning then
-        if not g_adminToolBox.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING) then
+        if g_adminToolBox.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING) then
             self:toggleVehicle(directionValue)
         end
     end
