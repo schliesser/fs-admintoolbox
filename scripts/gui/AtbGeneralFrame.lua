@@ -3,16 +3,17 @@ local AtbGeneralFrame_mt = Class(AtbGeneralFrame, TabbedMenuFrameElement)
 AtbGeneralFrame.CONTROLS = {
     SETTINGS_CONTAINER = "settingsContainer",
 	BOX_LAYOUT = "boxLayout",
+    AI_WORKER_COUNT = "aiWorkerCount",
+    VEHICE_TABBING = "enableVehicleTabbing",
     ENABLE_SLEEPING = "enableSleeping",
-    ENABLE_AI = "enableAi",
     ENABLE_SUPER_STRENGH = "enableSuperStrengh",
-    FARMS_LOAN_MIN = "farmsLoanMin",
-    FARMS_LOAN_MAX = "farmsLoanMax",
     STORE_ACTIVE = "storeActive",
     STORE_LEASING = "storeLeasing",
     STORE_OPEN_TIME = "storeOpenTime",
     STORE_CLOSE_TIME = "storeCloseTime",
-    MISSIONS_ACTIVE = "missionsActive",
+    FARMS_LOAN_MIN = "farmsLoanMin",
+    FARMS_LOAN_MAX = "farmsLoanMax",
+    MISSIONS_PARALLEL_COUNT = "missionsContractLimit",
     MISSIONS_LEASING = "missionsLeasing",
 }
 
@@ -42,19 +43,12 @@ function AtbGeneralFrame:initialize()
 		inputAction = InputAction.MENU_BACK
 	}
 
-    -- Build available times for shop
-    self.times = {}
-    for i = AtbSettings.MIN_TIME, AtbSettings.MAX_TIME do
-		table.insert(self.times, string.format("%d:00", i))
-	end
-
     -- Add checkbox fields
-    self.checkboxMapping[self.enableAi] = AtbSettings.SETTING.GENERAL_AI
+    self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.SETTING.VEHICLE_TABBING
     self.checkboxMapping[self.enableSleeping] = AtbSettings.SETTING.GENERAL_SLEEP
     self.checkboxMapping[self.enableSuperStrengh] = AtbSettings.SETTING.GENERAL_STRENGH
     self.checkboxMapping[self.storeActive] = AtbSettings.SETTING.STORE_ACTIVE
     self.checkboxMapping[self.storeLeasing] = AtbSettings.SETTING.STORE_LEASING
-    self.checkboxMapping[self.missionsActive] = AtbSettings.SETTING.MISSIONS_ACTIVE
     self.checkboxMapping[self.missionsLeasing] = AtbSettings.SETTING.MISSIONS_LEASING
 
     -- Add input fields
@@ -62,12 +56,34 @@ function AtbGeneralFrame:initialize()
     self.inputNumericMapping[self.farmsLoanMax] = AtbSettings.SETTING.FARM_LOAN_MAX
 
     -- Add select fields
+    self.optionMapping[self.aiWorkerCount] = AtbSettings.SETTING.AI_WORKER_COUNT
     self.optionMapping[self.storeOpenTime] = AtbSettings.SETTING.STORE_OPEN_TIME
     self.optionMapping[self.storeCloseTime] = AtbSettings.SETTING.STORE_CLOSE_TIME
+    self.optionMapping[self.missionsContractLimit] = AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT
+
+    -- Build workers select texts
+    local workers = {}
+    for i = 0, AtbSettings.WORKERS_MAX do
+		table.insert(workers, tostring(i))
+	end
+
+    -- Build missions select texts
+    local missions = {}
+    for i = 0, AtbSettings.MISSIONS_COUNT_MAX do
+		table.insert(missions, tostring(i))
+	end
+
+    -- Build available times for shop
+    local times = {}
+    for i = AtbSettings.MIN_TIME, AtbSettings.MAX_TIME do
+		table.insert(times, string.format("%d:00", i))
+	end
 
     -- Define select options
-    self.storeOpenTime:setTexts(self.times)
-    self.storeCloseTime:setTexts(self.times)
+    self.aiWorkerCount:setTexts(workers)
+    self.storeOpenTime:setTexts(times)
+    self.storeCloseTime:setTexts(times)
+    self.missionsContractLimit:setTexts(missions)
 end
 
 function AtbGeneralFrame:onFrameOpen(element)
@@ -165,5 +181,16 @@ function AtbGeneralFrame:onClickTime(state, element)
 		g_adminToolBox.settings:setValue(settingsKey, value, true)
 	else
 		print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
+	end
+end
+
+function AtbGeneralFrame:onClickMultiOption(state, element)
+	local settingsKey = self.optionMapping[element]
+
+	if settingsKey ~= nil then
+        local value = state - 1
+        g_adminToolBox.settings:setValue(settingsKey, value, true)
+	else
+		print("Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
 	end
 end

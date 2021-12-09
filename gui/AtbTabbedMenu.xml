@@ -30,7 +30,6 @@
         <GuiElement type="paging" profile="uiInGameMenuPaging" onPageChange="onPageChange" onPageUpdate="onPageUpdate" id="pagingElement">
             <!-- Admin Tools pages -->
             <GuiElement type="frameReference" ref="AtbGeneral" name="AtbGeneral" id="pageAtbGeneral"/>
-            <GuiElement type="frameReference" ref="AtbTest" name="AtbTest" id="pageAtbTest"/>
         </GuiElement>
     </GuiElement>
 

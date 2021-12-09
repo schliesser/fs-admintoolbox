@@ -9,14 +9,5 @@
         <!-- Shop -->
         <text name="ATB_shopDialogDisabled" text="The store is disabled." />
         <text name="ATB_shopDialogClosed" text="The store is currently closed. It will open at %d:00" />
-
-        <!-- Test Frame -->
-        <text name="ATB_frameTest" text="Admin Tools Test Frame" />
-        <text name="ATB_optionCheck" text="Check" />
-        <text name="ATB_optionMulti" text="Multi" />
-        <text name="ATB_optionMulti_foo" text="Foo" />
-        <text name="ATB_optionMulti_bar" text="Bar" />
-        <text name="ATB_optionMulti_baz" text="Baz" />
-        <text name="ATB_toolTipMulti" text="A multi value select box" />
     </texts>
 </l10n>

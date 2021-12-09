@@ -5,7 +5,7 @@ Admin Tools for Farming Simulator 2022
 Copyright (c) -tinte-, 2021
 
 Author: André Buchmann
-Issues: https://github.com/schliesser/fs-admintools/issues
+Issues: https://github.com/schliesser/fs-admintoolbox/issues
 
 Feel free to open a pull reuests for enhancements or bugfixes.
 
@@ -43,11 +43,9 @@ function AdminToolBox:load()
 
     local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
     local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
-    local testFrame = AtbTestFrame.new(nil, g_i18n)
 
     if g_gui ~= nil then
         g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
-        g_gui:loadGui(self.baseDirectory .. "gui/AtbTestFrame.xml", "AtbTestFrame", testFrame, true)
         g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
     end
 
@@ -87,10 +85,18 @@ function AdminToolBox:applySettings()
     local farmChanged = false
 
     if g_currentMission ~= nil then
-        -- Disable AI
-        -- todo: replace on/off with value change of maxNumHirables workers
-        g_currentMission.disableAIVehicle = not self.settings:getValue(AtbSettings.SETTING.GENERAL_AI)
-        g_currentMission.maxNumHirables = (self.settings:getValue(AtbSettings.SETTING.GENERAL_AI) and AtbSettings.WORKERS_DEFAULT or 0)
+        -- Set number of AI workers
+        local aiWorkerCount = self.settings:getValue(AtbSettings.SETTING.AI_WORKER_COUNT)
+        g_currentMission.maxNumHirables = aiWorkerCount
+        -- Disable if number of AI workers is 0
+        if aiWorkerCount == 0 then
+            g_currentMission.disableAIVehicle = true
+        else
+            g_currentMission.disableAIVehicle = false
+        end
+
+        -- Override contract limit
+        MissionManager.ACTIVE_CONTRACT_LIMIT =  self.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
 
         -- Enable/Disable super strength
         -- todo: On the inital call the player is not yet set. Maybe this needs to be triggered later. Works after opening and closing ATB menu
@@ -171,7 +177,6 @@ function initAdminToolBox(name)
             -- Load menu with frames
             source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
             source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
-            source(modDir .. "scripts/gui/AtbTestFrame.lua");
 
             FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, loadMapFinished)
 
