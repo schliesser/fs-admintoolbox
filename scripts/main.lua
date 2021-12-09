@@ -43,20 +43,25 @@ function AdminToolBox:load()
     self.settings = AtbSettings.new(nil, g_messageCenter)
     self.settings:loadFromXML(self.xml)
 
-    local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
-    local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
+    if self.isClient then
+        local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
+        local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
 
-    if g_gui ~= nil then
-        g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
-        g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
+        if g_gui ~= nil then
+            g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
+            g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
+        end
     end
 
     self.isEnabled = true
 end
 
 function AdminToolBox:onInputOpenMenu(_, inputValue)
-    if self.isEnabled and not g_gui:getIsGuiVisible() then
-        self.atbGui = g_gui:showGui("AtbMenu")
+    -- todo: validate that player has access
+    if self.isServer or g_currentMission.isMasterUser then
+        if self.isEnabled and not g_gui:getIsGuiVisible() then
+            self.atbGui = g_gui:showGui("AtbMenu")
+        end
     end
 end
 
@@ -77,6 +82,9 @@ function AdminToolBox:initFunctionOverridesOnStartup()
 
     -- Enable/Disable sleeping
     SleepManager.getCanSleep = Utils.overwrittenFunction(SleepManager.getCanSleep, AtbOverrides.getCanSleep)
+
+    -- Enable/Disable vehicle tabbing
+    BaseMission.onSwitchVehicle = Utils.overwrittenFunction(BaseMission.onSwitchVehicle, AtbOverrides.onSwitchVehicle)
 end
 
 function AdminToolBox:applySettings()
@@ -182,6 +190,7 @@ function initAdminToolBox(name)
         local atb = AdminToolBox.new(g_server ~= nil, g_dedicatedServerInfo == nil, name, modDir)
         if atb ~= nil then
             -- Define global Admin Tools variable
+            -- Doesn't work correctly in FS22 anymore. Append g_currentMission
             getfenv(0)["g_adminToolBox"] = atb
 
             -- Load files
@@ -214,7 +223,9 @@ function registerActionEvents()
     if g_dedicatedServerInfo == nil and g_adminToolBox ~= nil then
         -- Menu Open
         local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_adminToolBox, g_adminToolBox.onInputOpenMenu, false, true, false, true)
-        -- g_inputBinding:setActionEventTextVisibility(eventIdOpenMenu, false) -- Hide from help menu
+        if not g_adminToolBox.isServer and not g_currentMission.isMasterUser then
+            g_inputBinding:setActionEventTextVisibility(eventIdOpenMenu, false) -- Hide from help menu
+        end
         g_adminToolBox.eventIdOpenMenu = eventIdOpenMenu
     end
 end
