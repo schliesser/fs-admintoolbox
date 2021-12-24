@@ -15,7 +15,7 @@ AdminToolBox = {}
 local AdminToolBox_mt = Class(AdminToolBox)
 
 function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)
-    if g_adminToolBox ~= nil then
+    if g_atb ~= nil then
         return
     end
 
@@ -27,6 +27,7 @@ function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)
     self.isClient = isClient
     self.customEnvironment = customEnvironment
     self.baseDirectory = baseDirectory
+    self.xmlPath = nil
 
     self:mergeModTranslations(g_i18n)
 
@@ -38,10 +39,7 @@ function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)
 end
 
 function AdminToolBox:load()
-    self.xml = self:getSettingsFile()
-
-    self.settings = AtbSettings.new(nil, g_messageCenter)
-    self.settings:loadFromXML(self.xml)
+    self.settings = AtbSettings.new(nil)
 
     if self.isClient then
         local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
@@ -51,6 +49,10 @@ function AdminToolBox:load()
             g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
             g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
         end
+    end
+
+    if g_currentMission.missionInfo.savegameDirectory ~= nil then
+        self.xmlPath = g_currentMission.missionInfo.savegameDirectory .. "/adminToolBox.xml"
     end
 
     self.isEnabled = true
@@ -89,14 +91,17 @@ end
 
 function AdminToolBox:applySettings()
     if not self.isEnabled then
+        print('ATB: Apply settings - disabled!!!!')
         return
     end
+
+    print('ATB: Apply settings')
 
     local farmChanged = false
 
     if g_currentMission ~= nil then
         -- Set number of AI workers
-        local aiWorkerCount = self.settings:getValue(AtbSettings.SETTING.AI_WORKER_COUNT)
+        local aiWorkerCount = g_atb.settings:getValue(AtbSettings.SETTING.AI_WORKER_COUNT)
         g_currentMission.maxNumHirables = aiWorkerCount
         -- Disable if number of AI workers is 0
         if aiWorkerCount == 0 then
@@ -106,12 +111,12 @@ function AdminToolBox:applySettings()
         end
 
         -- Override contract limit
-        MissionManager.ACTIVE_CONTRACT_LIMIT =  self.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
+        MissionManager.ACTIVE_CONTRACT_LIMIT =  g_atb.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
 
         -- Enable/Disable super strength
         -- todo: On the inital call the player is not yet set. Maybe this needs to be triggered later. Works after opening and closing ATB menu
         if g_currentMission.player ~= nil then
-            local atbSuperStrengh = self.settings:getValue(AtbSettings.SETTING.GENERAL_STRENGH)
+            local atbSuperStrengh = g_atb.settings:getValue(AtbSettings.SETTING.GENERAL_STRENGH)
             local playerSuperStrengh = Utils.getNoNil(g_currentMission.player.superStrengthEnabled, false)
             if atbSuperStrengh ~= playerSuperStrengh then
                 print(g_currentMission.player:consoleCommandToggleSuperStrongMode())
@@ -120,13 +125,13 @@ function AdminToolBox:applySettings()
     end
 
     -- Override farm loan settings
-    local loanMin = self.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MIN)
+    local loanMin = g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MIN)
     if loanMin ~= Farm.MIN_LOAN then
         Farm.MIN_LOAN = loanMin
         farmChanged = true
     end
 
-    local loanMax = self.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MAX)
+    local loanMax = g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MAX)
     if loanMax ~= Farm.MAX_LOAN then
         Farm.MAX_LOAN = loanMax
         farmChanged = true
@@ -141,28 +146,6 @@ function AdminToolBox:applySettings()
             end
         end
     end
-end
-
-function AdminToolBox:getSettingsFile()
-    local key = "AdminToolBoxXML"
-    local path = self:getSettingsFilePath()
-
-    -- Init settings file
-    if not fileExists(path) then
-        local xmlFile = createXMLFile(key, path, "AdminToolBox")
-        saveXMLFile(xmlFile)
-		delete(xmlFile)
-    end
-
-    return loadXMLFile(key, path)
-end
-
-function AdminToolBox:getSettingsFilePath()
-    local savegameFolderPath = g_currentMission.missionInfo.savegameDirectory .. "/"
-	if savegameFolderPath == nil then
-		savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex .. "/")
-	end
-	return savegameFolderPath .. "adminToolBox.xml"
 end
 
 function AdminToolBox:mergeModTranslations(i18n)
@@ -180,59 +163,82 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Initialize Admin Tool Box
 ----------------------------------------------------------------------------------------------------
+local atb = nil
+local modDir = g_currentModDirectory
+source(modDir .. "scripts/AtbSettings.lua");
+source(modDir .. "scripts/AtbOverrides.lua");
+source(modDir .. "scripts/events/SaveAtbSettingsEvent.lua");
+source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
+source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
+
 function initAdminToolBox(name)
     if name == nil then
         return
     end
 
-    if g_adminToolBox == nil then
-        local modDir = g_currentModDirectory
-        local atb = AdminToolBox.new(g_server ~= nil, g_dedicatedServerInfo == nil, name, modDir)
+    if g_atb == nil then
+
+        atb = AdminToolBox.new(g_server ~= nil, g_dedicatedServerInfo == nil, name, modDir)
         if atb ~= nil then
             -- Define global Admin Tools variable
-            -- Doesn't work correctly in FS22 anymore. Append g_currentMission
-            getfenv(0)["g_adminToolBox"] = atb
-
-            -- Load files
-            source(modDir .. "scripts/AtbSettings.lua");
-            source(modDir .. "scripts/AtbOverrides.lua");
-
-            -- Load menu with frames
-            source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
-            source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
+            -- Doesn't work correctly in FS22 anymore, it's not accessible for other mods
+            getfenv(0)["g_atb"] = atb
 
             FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, loadMapFinished)
-
             FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents, registerActionEvents)
+            FSBaseMission.onConnectionFinishedLoading = Utils.appendedFunction(FSBaseMission.onConnectionFinishedLoading, onConnectionFinishedLoading)
+            FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
+            Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, loadMission00Finished)
             BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents, unregisterActionEvents)
         end
-
-        print("  Initialized Admin Tool Box")
     end
 end
 
 function loadMapFinished()
-    if g_adminToolBox ~= nil then
-        g_adminToolBox:load()
-        g_adminToolBox:initFunctionOverridesOnStartup()
-        g_adminToolBox:applySettings()
+    if g_atb ~= nil then
+        g_atb:load()
+        g_atb:initFunctionOverridesOnStartup()
+        g_atb:applySettings()
     end
 end
 
 function registerActionEvents()
-    if g_dedicatedServerInfo == nil and g_adminToolBox ~= nil then
+    if g_dedicatedServerInfo == nil and g_atb ~= nil then
         -- Menu Open
-        local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_adminToolBox, g_adminToolBox.onInputOpenMenu, false, true, false, true)
-        if not g_adminToolBox.isServer and not g_currentMission.isMasterUser then
+        local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_atb, g_atb.onInputOpenMenu, false, true, false, true)
+        if not g_atb.isServer and not g_currentMission.isMasterUser then
             g_inputBinding:setActionEventTextVisibility(eventIdOpenMenu, false) -- Hide from help menu
         end
-        g_adminToolBox.eventIdOpenMenu = eventIdOpenMenu
+        g_atb.eventIdOpenMenu = eventIdOpenMenu
     end
 end
 
 function unregisterActionEvents()
-    if g_adminToolBox ~= nil then
-        g_inputBinding:removeActionEventsByTarget(g_adminToolBox)
+    if g_atb ~= nil then
+        g_inputBinding:removeActionEventsByTarget(g_atb)
+    end
+end
+
+function saveToXMLFile(missionInfo)
+    if g_atb ~= nil and g_atb.settings ~=nil then
+        g_atb.settings:saveToXMLFile()
+    end
+end
+
+function loadMission00Finished(mission)
+    if mission:getIsServer() and  g_atb ~= nil and g_atb.xmlPath ~= nil and fileExists(g_atb.xmlPath) then
+        local xmlFile = loadXMLFile("AdminToolBoxXML", g_atb.xmlPath)
+        if xmlFile ~= nil then
+            g_atb.settings:loadFromXML(xmlFile)
+            delete(xmlFile)
+        end
+    end
+    g_atb:applySettings()
+end
+
+function onConnectionFinishedLoading(mission, connection, x,y,z, viewDistanceCoeff)
+    if g_atb ~= nil and connection ~= nil then
+        connection:sendEvent(SaveAtbSettingsEvent.new())
     end
 end
 

@@ -93,16 +93,16 @@ end
 
 function AtbGeneralFrame:updateSettings()
 	for element, settingsKey in pairs(self.checkboxMapping) do
-		element:setIsChecked(g_adminToolBox.settings:getValue(settingsKey))
+		element:setIsChecked(g_atb.settings:getValue(settingsKey))
 	end
 
 	for element, settingsKey in pairs(self.optionMapping) do
         -- Add offset +1 for state to have times displayed correctly
-		element:setState(g_adminToolBox.settings:getValue(settingsKey) + 1)
+		element:setState(g_atb.settings:getValue(settingsKey) + 1)
 	end
 
     for element, settingsKey in pairs(self.inputNumericMapping) do
-		element:setText(tostring(g_adminToolBox.settings:getValue(settingsKey)))
+		element:setText(tostring(g_atb.settings:getValue(settingsKey)))
 	end
 end
 
@@ -110,7 +110,7 @@ function AtbGeneralFrame:onClickCheckbox(state, element)
 	local settingsKey = self.checkboxMapping[element]
 
 	if settingsKey ~= nil then
-		g_adminToolBox.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED, true)
+		g_atb.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED)
 	else
 		print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
 	end
@@ -123,7 +123,7 @@ function AtbGeneralFrame:onEnterPressed(element)
 
         -- Reset on empty value to current value
         if value == nil then
-            value = g_adminToolBox.settings:getValue(settingsKey)
+            value = g_atb.settings:getValue(settingsKey)
         end
 
         -- loan must be lower than max money constant
@@ -140,7 +140,7 @@ function AtbGeneralFrame:onEnterPressed(element)
         end
 
         element:setText(tostring(value))
-        g_adminToolBox.settings:setValue(settingsKey, value, true)
+        g_atb.settings:setValue(settingsKey, value)
     else
         print("Warning: Invalid settings input event or key configuration for element " .. element:toString())
     end
@@ -151,7 +151,7 @@ function AtbGeneralFrame:onEscPressed(element)
 
     if settingsKey ~= nil then
         -- Reset value
-        element:setText(tostring(g_adminToolBox.settings:getValue(settingsKey)))
+        element:setText(tostring(g_atb.settings:getValue(settingsKey)))
     end
 end
 
@@ -178,7 +178,7 @@ function AtbGeneralFrame:onClickTime(state, element)
         end
 
         -- save value
-		g_adminToolBox.settings:setValue(settingsKey, value, true)
+		g_atb.settings:setValue(settingsKey, value)
 	else
 		print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
 	end
@@ -189,7 +189,7 @@ function AtbGeneralFrame:onClickMultiOption(state, element)
 
 	if settingsKey ~= nil then
         local value = state - 1
-        g_adminToolBox.settings:setValue(settingsKey, value, true)
+        g_atb.settings:setValue(settingsKey, value)
 	else
 		print("Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
 	end

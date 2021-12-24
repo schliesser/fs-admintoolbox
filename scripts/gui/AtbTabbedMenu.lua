@@ -29,7 +29,6 @@ end
 function AtbTabbedMenu:onGuiSetupFinished()
     AtbTabbedMenu:superClass().onGuiSetupFinished(self)
 
-    -- self.messageCenter:subscribe(MessageType.GUI_INGAME_OPEN_GENERAL_SCREEN, self.openGeneralScreen, self)
     self.clickBackCallback = self:makeSelfCallback(self.onButtonBack)
     self:setupMenuPages()
 end
@@ -76,7 +75,7 @@ function AtbTabbedMenu:setupMenuButtonInfo()
 end
 
 function AtbTabbedMenu:exitMenu()
-    g_adminToolBox:applySettings()
+    g_atb:applySettings()
 
     AtbTabbedMenu:superClass().exitMenu(self)
 end

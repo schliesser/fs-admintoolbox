@@ -1,15 +1,15 @@
 AtbOverrides = {}
 
 function AtbOverrides:storeLease(storeItem, vehicle, saleItem)
-    storeItem.allowLeasing = g_adminToolBox.settings:getValue(AtbSettings.SETTING.STORE_LEASING)
+    storeItem.allowLeasing = g_atb.settings:getValue(AtbSettings.SETTING.STORE_LEASING)
 end
 
 function AtbOverrides:missionLease()
-    return self.vehiclesToLoad ~= nil and g_adminToolBox.settings:getValue(AtbSettings.SETTING.MISSIONS_LEASING)
+    return self.vehiclesToLoad ~= nil and g_atb.settings:getValue(AtbSettings.SETTING.MISSIONS_LEASING)
 end
 
 function AtbOverrides:getCanSleep()
-    return not self.isSleeping and g_adminToolBox.settings:getValue(AtbSettings.SETTING.GENERAL_SLEEP)
+    return not self.isSleeping and g_atb.settings:getValue(AtbSettings.SETTING.GENERAL_SLEEP)
 end
 
 function AtbOverrides:openShop(guiName)
@@ -18,7 +18,7 @@ function AtbOverrides:openShop(guiName)
     end
 
     -- general enable/disable of the shop
-    if not g_adminToolBox.settings:getValue(AtbSettings.SETTING.STORE_ACTIVE) then
+    if not g_atb.settings:getValue(AtbSettings.SETTING.STORE_ACTIVE) then
         g_gui:showGui("")
         g_gui:showInfoDialog({
             text = g_i18n:getText("ATB_storeDialogDisabled")
@@ -27,8 +27,8 @@ function AtbOverrides:openShop(guiName)
     end
 
     -- closed by time
-    local openTime = g_adminToolBox.settings:getValue(AtbSettings.SETTING.STORE_OPEN_TIME)
-    local closeTime = g_adminToolBox.settings:getValue(AtbSettings.SETTING.STORE_CLOSE_TIME)
+    local openTime = g_atb.settings:getValue(AtbSettings.SETTING.STORE_OPEN_TIME)
+    local closeTime = g_atb.settings:getValue(AtbSettings.SETTING.STORE_CLOSE_TIME)
     if not (g_currentMission.environment.currentHour >= openTime and g_currentMission.environment.currentHour < closeTime) then
         g_gui:showGui("")
         g_gui:showInfoDialog({
@@ -40,7 +40,7 @@ end
 -- check if vehicle switching is allowed
 function AtbOverrides:onSwitchVehicle(_, _, directionValue)
     if not self.isPlayerFrozen and self.isRunning then
-        if g_adminToolBox.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING) then
+        if g_atb.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING) then
             self:toggleVehicle(directionValue)
         end
     end

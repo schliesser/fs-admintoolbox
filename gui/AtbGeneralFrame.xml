@@ -93,13 +93,13 @@
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_farms" />
 
                 <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
-                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMin" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" imeTitle="Minimal Loan" imeDescription="Minimal Loan for farms (Default: 500,000)" imePlaceholder="Place Holder lol" />
+                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMin" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" />
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_loanMin"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_loanMin" />
                 </GuiElement>
 
                 <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
-                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMax" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" imeTitle="Maximum Loan" imeDescription="Maximum loan for farms (Default: 500,000)" imePlaceholder="Place Holder2 lol" />
+                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMax" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" />
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_loanMax"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_loanMax" />
                 </GuiElement>
