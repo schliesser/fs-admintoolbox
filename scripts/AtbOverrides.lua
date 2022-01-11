@@ -38,10 +38,8 @@ function AtbOverrides:openShop(guiName)
 end
 
 -- check if vehicle switching is allowed
-function AtbOverrides:onSwitchVehicle(_, _, directionValue)
-    if not self.isPlayerFrozen and self.isRunning then
-        if g_atb.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING) then
-            self:toggleVehicle(directionValue)
-        end
+function AtbOverrides:onSwitchVehicle(superFunc, one, two, directionValue)
+    if g_atb.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING) then
+        superFunc(self, one, two, directionValue)
     end
 end
