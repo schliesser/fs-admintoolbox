@@ -46,7 +46,6 @@ end
 
 -- override loan calculation of Farm class
 function AtbOverrides:updateMaxLoan()
-    print('ATB: updateMaxLoan')
     local roundedTo5000 = math.floor(Farm.EQUITY_LOAN_RATIO * self:getEquity() / 5000) * 5000
     self.loanMax = MathUtil.clamp(roundedTo5000, g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MIN), g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MAX))
 end

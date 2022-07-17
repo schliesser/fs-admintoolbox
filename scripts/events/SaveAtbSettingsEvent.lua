@@ -50,7 +50,6 @@ end
 function SaveAtbSettingsEvent:writeStream(streamId, connection)
 	streamWriteInt32(streamId, g_atb.settings:getValue(AtbSettings.SETTING.AI_WORKER_COUNT))
 	streamWriteBool(streamId, g_atb.settings:getValue(AtbSettings.SETTING.GENERAL_SLEEP))
-	streamWriteBool(streamId, g_atb.settings:getValue(AtbSettings.SETTING.GENERAL_STRENGH))
 	streamWriteBool(streamId, g_atb.settings:getValue(AtbSettings.SETTING.VEHICLE_TABBING))
 	streamWriteBool(streamId, g_atb.settings:getValue(AtbSettings.SETTING.STORE_ACTIVE))
 	streamWriteInt32(streamId, g_atb.settings:getValue(AtbSettings.SETTING.STORE_OPEN_TIME))

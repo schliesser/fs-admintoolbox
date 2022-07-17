@@ -3,7 +3,6 @@ local AtbSettings_mt = Class(AtbSettings)
 AtbSettings.SETTING = {
     AI_WORKER_COUNT = "aiWorkerCount",
     GENERAL_SLEEP = "generalSleep",
-    GENERAL_STRENGH = "generalStrength",
     VEHICLE_TABBING = "generalVehicleTabbing",
     STORE_ACTIVE = "storeActive",
     STORE_OPEN_TIME = "storeOpenTime",
@@ -37,7 +36,6 @@ function AtbSettings.new(customMt)
     -- general
     self[AtbSettings.SETTING.AI_WORKER_COUNT] = AtbSettings.WORKERS_DEFAULT
     self[AtbSettings.SETTING.GENERAL_SLEEP] = true
-    self[AtbSettings.SETTING.GENERAL_STRENGH] = false
     self[AtbSettings.SETTING.VEHICLE_TABBING] = true
 
     -- store
@@ -114,8 +112,6 @@ function AtbSettings:loadFromXML(xmlFile)
                 AtbSettings.WORKERS_MAX), true)
         self:setValue(AtbSettings.SETTING.GENERAL_SLEEP, Utils.getNoNil(getXMLBool(xmlFile, key .. ".general.sleep"),
             self[AtbSettings.SETTING.GENERAL_SLEEP]), true)
-        self:setValue(AtbSettings.SETTING.GENERAL_STRENGH, Utils.getNoNil(
-            getXMLBool(xmlFile, key .. ".general.strengh"), self[AtbSettings.SETTING.GENERAL_STRENGH]), true)
         self:setValue(AtbSettings.SETTING.VEHICLE_TABBING, Utils.getNoNil(
             getXMLBool(xmlFile, key .. ".general.vehicleTabbing"), self[AtbSettings.SETTING.VEHICLE_TABBING]), true)
 
@@ -164,7 +160,6 @@ function AtbSettings:saveToXMLFile()
     -- general
     setXMLInt(xmlFile, key .. ".ai.workers", self[AtbSettings.SETTING.AI_WORKER_COUNT])
     setXMLBool(xmlFile, key .. ".general.sleep", self[AtbSettings.SETTING.GENERAL_SLEEP])
-    setXMLBool(xmlFile, key .. ".general.strengh", self[AtbSettings.SETTING.GENERAL_STRENGH])
     setXMLBool(xmlFile, key .. ".general.vehicleTabbing", self[AtbSettings.SETTING.VEHICLE_TABBING])
 
     -- store

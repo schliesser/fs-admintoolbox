@@ -24,10 +24,6 @@ For Bugreports please use: https://github.com/schliesser/fs-admintoolbox/issues
     - Enable/Disable vehicle renting for missions
     - Set max parallel missions per farm
 
-## Known Bugs
-
-- Store opening/closing hours not working properly on client in 1.5.0.0
-
 ## Ideas / Upcomming features
 
 - General
