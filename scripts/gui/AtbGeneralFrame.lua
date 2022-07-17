@@ -2,7 +2,7 @@ AtbGeneralFrame = {}
 local AtbGeneralFrame_mt = Class(AtbGeneralFrame, TabbedMenuFrameElement)
 AtbGeneralFrame.CONTROLS = {
     SETTINGS_CONTAINER = "settingsContainer",
-	BOX_LAYOUT = "boxLayout",
+    BOX_LAYOUT = "boxLayout",
     AI_WORKER_COUNT = "aiWorkerCount",
     VEHICE_TABBING = "enableVehicleTabbing",
     ENABLE_SLEEPING = "enableSleeping",
@@ -13,34 +13,34 @@ AtbGeneralFrame.CONTROLS = {
     FARMS_LOAN_MIN = "farmsLoanMin",
     FARMS_LOAN_MAX = "farmsLoanMax",
     MISSIONS_PARALLEL_COUNT = "missionsContractLimit",
-    MISSIONS_LEASING = "missionsLeasing",
+    MISSIONS_LEASING = "missionsLeasing"
 }
 
 function AtbGeneralFrame.new(subclass_mt, l10n)
-	local self = AtbGeneralFrame:superClass().new(nil, subclass_mt or AtbGeneralFrame_mt)
+    local self = AtbGeneralFrame:superClass().new(nil, subclass_mt or AtbGeneralFrame_mt)
 
-	self:registerControls(AtbGeneralFrame.CONTROLS)
+    self:registerControls(AtbGeneralFrame.CONTROLS)
 
     self.l10n = l10n
     self.missionInfo = nil
 
     self.checkboxMapping = {}
-	self.optionMapping = {}
+    self.optionMapping = {}
     self.inputNumericMapping = {}
 
-	return self
+    return self
 end
 
 function AtbGeneralFrame:copyAttributes(src)
-	AtbGeneralFrame:superClass().copyAttributes(self, src)
+    AtbGeneralFrame:superClass().copyAttributes(self, src)
 
     self.l10n = src.l10n
 end
 
 function AtbGeneralFrame:initialize()
     self.backButtonInfo = {
-		inputAction = InputAction.MENU_BACK
-	}
+        inputAction = InputAction.MENU_BACK
+    }
 
     -- Add checkbox fields
     self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.SETTING.VEHICLE_TABBING
@@ -62,20 +62,20 @@ function AtbGeneralFrame:initialize()
     -- Build workers select texts
     local workers = {}
     for i = 0, AtbSettings.WORKERS_MAX do
-		table.insert(workers, tostring(i))
-	end
+        table.insert(workers, tostring(i))
+    end
 
     -- Build missions select texts
     local missions = {}
     for i = 0, AtbSettings.MISSIONS_COUNT_MAX do
-		table.insert(missions, tostring(i))
-	end
+        table.insert(missions, tostring(i))
+    end
 
     -- Build available times for shop
     local times = {}
     for i = AtbSettings.MIN_TIME, AtbSettings.MAX_TIME do
-		table.insert(times, string.format("%d:00", i))
-	end
+        table.insert(times, string.format("%d:00", i))
+    end
 
     -- Define select options
     self.aiWorkerCount:setTexts(workers)
@@ -85,33 +85,33 @@ function AtbGeneralFrame:initialize()
 end
 
 function AtbGeneralFrame:onFrameOpen(element)
-	AtbGeneralFrame:superClass().onFrameOpen(self)
+    AtbGeneralFrame:superClass().onFrameOpen(self)
     self:updateSettings()
 end
 
 function AtbGeneralFrame:updateSettings()
-	for element, settingsKey in pairs(self.checkboxMapping) do
-		element:setIsChecked(g_atb.settings:getValue(settingsKey))
-	end
+    for element, settingsKey in pairs(self.checkboxMapping) do
+        element:setIsChecked(g_atb.settings:getValue(settingsKey))
+    end
 
-	for element, settingsKey in pairs(self.optionMapping) do
+    for element, settingsKey in pairs(self.optionMapping) do
         -- Add offset +1 for state to have times displayed correctly
-		element:setState(g_atb.settings:getValue(settingsKey) + 1)
-	end
+        element:setState(g_atb.settings:getValue(settingsKey) + 1)
+    end
 
     for element, settingsKey in pairs(self.inputNumericMapping) do
-		element:setText(tostring(g_atb.settings:getValue(settingsKey)))
-	end
+        element:setText(tostring(g_atb.settings:getValue(settingsKey)))
+    end
 end
 
 function AtbGeneralFrame:onClickCheckbox(state, element)
-	local settingsKey = self.checkboxMapping[element]
+    local settingsKey = self.checkboxMapping[element]
 
-	if settingsKey ~= nil then
-		g_atb.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED)
-	else
-		print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
-	end
+    if settingsKey ~= nil then
+        g_atb.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED)
+    else
+        print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
+    end
 end
 
 function AtbGeneralFrame:onEnterPressed(element)
@@ -156,39 +156,44 @@ end
 function AtbGeneralFrame:onClickTime(state, element)
     local settingsKey = self.optionMapping[element]
 
-	if settingsKey ~= nil then
+    if settingsKey ~= nil then
         local value = state - 1
 
         -- opening must be before closing
         if element.id == AtbGeneralFrame.CONTROLS.STORE_OPEN_TIME then
-            value = math.min(value, (self.storeCloseTime.state - 2))
+            if state == 25 then
+                value = math.min(self.storeCloseTime.state - 2, AtbSettings.MAX_TIME)
+            elseif state >= self.storeCloseTime.state then
+                value = 0
+            end
         end
 
         -- closing must be after opening
         if element.id == AtbGeneralFrame.CONTROLS.STORE_CLOSE_TIME then
-            value = math.max(value, self.storeOpenTime.state)
+            if state == self.storeOpenTime.state then
+                value = math.max(self.storeOpenTime.state, AtbSettings.MAX_TIME)
+            elseif state <= self.storeOpenTime.state then
+                value = self.storeOpenTime.state
+            end
         end
 
         -- update modifed value
-        local valueState = value + 1
-        if valueState ~= state then
-            element:setState(valueState)
-        end
+        element:setState(value + 1)
 
         -- save value
-		g_atb.settings:setValue(settingsKey, value)
-	else
-		print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
-	end
+        g_atb.settings:setValue(settingsKey, value)
+    else
+        print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
+    end
 end
 
 function AtbGeneralFrame:onClickMultiOption(state, element)
-	local settingsKey = self.optionMapping[element]
+    local settingsKey = self.optionMapping[element]
 
-	if settingsKey ~= nil then
+    if settingsKey ~= nil then
         local value = state - 1
         g_atb.settings:setValue(settingsKey, value)
-	else
-		print("Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
-	end
+    else
+        print("Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
+    end
 end
