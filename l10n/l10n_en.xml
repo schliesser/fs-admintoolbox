@@ -22,9 +22,6 @@
         <text name="ATB_title_sleep" text="Sleeping" />
         <text name="ATB_tip_sleep" text="Enable/disable sleeping. (Default: on)" />
 
-        <text name="ATB_title_strengh" text="Super strengh" />
-        <text name="ATB_tip_strengh" text="Enable/disable super strengh. (Default: off)" />
-
         <text name="ATB_title_storeActive" text="Store active" />
         <text name="ATB_tip_storeActive" text="Enable/disable Store for all players (Default: on)" />
         <text name="ATB_title_storeOpenTime" text="Store opening" />

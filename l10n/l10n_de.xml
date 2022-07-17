@@ -22,9 +22,6 @@
         <text name="ATB_title_sleep" text="Schlafen" />
         <text name="ATB_tip_sleep" text="Schlafen (de)aktivieren. (Standard: An)" />
 
-        <text name="ATB_title_strengh" text="Superkraft" />
-        <text name="ATB_tip_strengh" text="Superkraft (de)aktivieren. (Standard: Aus)" />
-
         <text name="ATB_title_storeActive" text="Shop aktiv" />
         <text name="ATB_tip_storeActive" text="Shop für alle Spieler an/abschalten (Standard: An)" />
         <text name="ATB_title_storeOpenTime" text="Ladenöffnung" />

@@ -21,7 +21,6 @@ General
 - Number of AI workers
 - Enable/Disable vehicle tabbing
 - Enable/Disable sleeping
-- Enable/Disable super strengh
 
 Store
 - Enable/Disable store
@@ -35,31 +34,11 @@ Missions
 - Enable/Disable vehicle renting for missions
 - Set max parallel missions per farm
 
-
-# Known Bugs
-################
-- Super strengh is not initially enabled. Open and Close ATB Menu once ingame.
-
-
 # Future Ideas
 ##################
-General
-- Set max time speed
-- Set player running speed
-Store
-- Restrict store to selected farms (idea)
-Farms
-- Add/Remove money from farms
-- Add/remove money daily (e.g. taxes/bonuses)
-- Loan intrest rate
-Missions
-- Set mission rewards
-- New missions interval
-- Max available missions
-- Straw collectible
-- Enable/Disable missions
-AI
-- Configurable costs
+
+I have many future ideas in mind for this mod. More ideas are welcome! Check Readme.md first!
+https://github.com/schliesser/fs-admintoolbox/
 ]]></en>
     </description>
     <iconFilename>icon.dds</iconFilename>

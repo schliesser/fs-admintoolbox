@@ -87,6 +87,9 @@ function AdminToolBox:initFunctionOverridesOnStartup()
 
     -- Enable/Disable vehicle tabbing
     BaseMission.onSwitchVehicle = Utils.overwrittenFunction(BaseMission.onSwitchVehicle, AtbOverrides.onSwitchVehicle)
+
+    -- Override farm loan calculation
+    Farm.updateMaxLoan = Utils.overwrittenFunction(Farm.updateMaxLoan, AtbOverrides.updateMaxLoan)
 end
 
 function AdminToolBox:applySettings()
@@ -112,38 +115,24 @@ function AdminToolBox:applySettings()
 
         -- Override contract limit
         MissionManager.ACTIVE_CONTRACT_LIMIT =  g_atb.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
-
-        -- Enable/Disable super strength
-        -- todo: On the inital call the player is not yet set. Maybe this needs to be triggered later. Works after opening and closing ATB menu
-        if g_currentMission.player ~= nil then
-            local atbSuperStrengh = g_atb.settings:getValue(AtbSettings.SETTING.GENERAL_STRENGH)
-            local playerSuperStrengh = Utils.getNoNil(g_currentMission.player.superStrengthEnabled, false)
-            if atbSuperStrengh ~= playerSuperStrengh then
-                print(g_currentMission.player:consoleCommandToggleSuperStrongMode())
-            end
-        end
     end
 
     -- Override farm loan settings
     local loanMin = g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MIN)
     if loanMin ~= Farm.MIN_LOAN then
         Farm.MIN_LOAN = loanMin
-        farmChanged = true
     end
 
     local loanMax = g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MAX)
     if loanMax ~= Farm.MAX_LOAN then
         Farm.MAX_LOAN = loanMax
-        farmChanged = true
     end
 
-    -- Update farms
-    if farmChanged then
-        for _, farm in ipairs(g_farmManager.farms) do
-			local farmId = farm.farmId
-			if farmId ~= FarmManager.SPECTATOR_FARM_ID then
-                g_messageCenter:publish(MessageType.FARM_PROPERTY_CHANGED, farmId)
-            end
+    -- Trigger farm change event to recalculate loans
+    for _, farm in ipairs(g_farmManager.farms) do
+        local farmId = farm.farmId
+        if farmId ~= FarmManager.SPECTATOR_FARM_ID then
+            g_messageCenter:publish(MessageType.FARM_PROPERTY_CHANGED, farmId)
         end
     end
 end

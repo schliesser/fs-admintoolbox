@@ -6,7 +6,6 @@ AtbGeneralFrame.CONTROLS = {
     AI_WORKER_COUNT = "aiWorkerCount",
     VEHICE_TABBING = "enableVehicleTabbing",
     ENABLE_SLEEPING = "enableSleeping",
-    ENABLE_SUPER_STRENGH = "enableSuperStrengh",
     STORE_ACTIVE = "storeActive",
     STORE_LEASING = "storeLeasing",
     STORE_OPEN_TIME = "storeOpenTime",
@@ -46,7 +45,6 @@ function AtbGeneralFrame:initialize()
     -- Add checkbox fields
     self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.SETTING.VEHICLE_TABBING
     self.checkboxMapping[self.enableSleeping] = AtbSettings.SETTING.GENERAL_SLEEP
-    self.checkboxMapping[self.enableSuperStrengh] = AtbSettings.SETTING.GENERAL_STRENGH
     self.checkboxMapping[self.storeActive] = AtbSettings.SETTING.STORE_ACTIVE
     self.checkboxMapping[self.storeLeasing] = AtbSettings.SETTING.STORE_LEASING
     self.checkboxMapping[self.missionsLeasing] = AtbSettings.SETTING.MISSIONS_LEASING
