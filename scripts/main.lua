@@ -44,9 +44,11 @@ function AdminToolBox:load()
     if self.isClient then
         local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
         local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
+        local storeFrame = AtbStoreFrame.new(nil, g_i18n)
 
         if g_gui ~= nil then
             g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
+            g_gui:loadGui(self.baseDirectory .. "gui/AtbStoreFrame.xml", "AtbStoreFrame", storeFrame, true)
             g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
         end
     end
@@ -159,6 +161,7 @@ source(modDir .. "scripts/AtbOverrides.lua");
 source(modDir .. "scripts/events/SaveAtbSettingsEvent.lua");
 source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
 source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
+source(modDir .. "scripts/gui/AtbStoreFrame.lua");
 
 function initAdminToolBox(name)
     if name == nil then

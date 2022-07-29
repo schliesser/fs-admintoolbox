@@ -37,6 +37,7 @@ function AtbTabbedMenu:setupMenuPages()
     self.pageIndex = 1
     self.allowPageSetup = true
     self:setupPage(self.pageAtbGeneral, AtbTabbedMenu.TAB_UV.GENERAL)
+    self:setupPage(self.pageAtbStore, AtbTabbedMenu.TAB_UV.STORE)
     self.allowPageSetup = false
 end
 

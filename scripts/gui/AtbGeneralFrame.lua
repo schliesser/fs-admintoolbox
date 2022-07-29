@@ -6,10 +6,6 @@ AtbGeneralFrame.CONTROLS = {
     AI_WORKER_COUNT = "aiWorkerCount",
     VEHICE_TABBING = "enableVehicleTabbing",
     ENABLE_SLEEPING = "enableSleeping",
-    STORE_ACTIVE = "storeActive",
-    STORE_LEASING = "storeLeasing",
-    STORE_OPEN_TIME = "storeOpenTime",
-    STORE_CLOSE_TIME = "storeCloseTime",
     FARMS_LOAN_MIN = "farmsLoanMin",
     FARMS_LOAN_MAX = "farmsLoanMax",
     MISSIONS_PARALLEL_COUNT = "missionsContractLimit",
@@ -45,8 +41,6 @@ function AtbGeneralFrame:initialize()
     -- Add checkbox fields
     self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.SETTING.VEHICLE_TABBING
     self.checkboxMapping[self.enableSleeping] = AtbSettings.SETTING.GENERAL_SLEEP
-    self.checkboxMapping[self.storeActive] = AtbSettings.SETTING.STORE_ACTIVE
-    self.checkboxMapping[self.storeLeasing] = AtbSettings.SETTING.STORE_LEASING
     self.checkboxMapping[self.missionsLeasing] = AtbSettings.SETTING.MISSIONS_LEASING
 
     -- Add input fields
@@ -55,8 +49,6 @@ function AtbGeneralFrame:initialize()
 
     -- Add select fields
     self.optionMapping[self.aiWorkerCount] = AtbSettings.SETTING.AI_WORKER_COUNT
-    self.optionMapping[self.storeOpenTime] = AtbSettings.SETTING.STORE_OPEN_TIME
-    self.optionMapping[self.storeCloseTime] = AtbSettings.SETTING.STORE_CLOSE_TIME
     self.optionMapping[self.missionsContractLimit] = AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT
 
     -- Build workers select texts
@@ -71,16 +63,8 @@ function AtbGeneralFrame:initialize()
         table.insert(missions, tostring(i))
     end
 
-    -- Build available times for shop
-    local times = {}
-    for i = AtbSettings.MIN_TIME, AtbSettings.MAX_TIME do
-        table.insert(times, string.format("%d:00", i))
-    end
-
     -- Define select options
     self.aiWorkerCount:setTexts(workers)
-    self.storeOpenTime:setTexts(times)
-    self.storeCloseTime:setTexts(times)
     self.missionsContractLimit:setTexts(missions)
 end
 
@@ -150,40 +134,6 @@ function AtbGeneralFrame:onEscPressed(element)
     if settingsKey ~= nil then
         -- Reset value
         element:setText(tostring(g_atb.settings:getValue(settingsKey)))
-    end
-end
-
-function AtbGeneralFrame:onClickTime(state, element)
-    local settingsKey = self.optionMapping[element]
-
-    if settingsKey ~= nil then
-        local value = state - 1
-
-        -- opening must be before closing
-        if element.id == AtbGeneralFrame.CONTROLS.STORE_OPEN_TIME then
-            if state == 25 then
-                value = math.min(self.storeCloseTime.state - 2, AtbSettings.MAX_TIME)
-            elseif state >= self.storeCloseTime.state then
-                value = 0
-            end
-        end
-
-        -- closing must be after opening
-        if element.id == AtbGeneralFrame.CONTROLS.STORE_CLOSE_TIME then
-            if state == self.storeOpenTime.state then
-                value = math.max(self.storeOpenTime.state, AtbSettings.MAX_TIME)
-            elseif state <= self.storeOpenTime.state then
-                value = self.storeOpenTime.state
-            end
-        end
-
-        -- update modifed value
-        element:setState(value + 1)
-
-        -- save value
-        g_atb.settings:setValue(settingsKey, value)
-    else
-        print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
     end
 end
 
