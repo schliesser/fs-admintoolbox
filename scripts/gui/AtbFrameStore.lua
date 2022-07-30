@@ -1,6 +1,6 @@
-AtbStoreFrame = {}
-local AtbStoreFrame_mt = Class(AtbStoreFrame, TabbedMenuFrameElement)
-AtbStoreFrame.CONTROLS = {
+AtbFrameStore = {}
+local AtbFrameStore_mt = Class(AtbFrameStore, TabbedMenuFrameElement)
+AtbFrameStore.CONTROLS = {
     SETTINGS_CONTAINER = "settingsContainer",
     BOX_LAYOUT = "boxLayout",
     STORE_ACTIVE = "storeActive",
@@ -9,10 +9,10 @@ AtbStoreFrame.CONTROLS = {
     STORE_CLOSE_TIME = "storeCloseTime",
 }
 
-function AtbStoreFrame.new(subclass_mt, l10n)
-    local self = AtbStoreFrame:superClass().new(nil, subclass_mt or AtbStoreFrame_mt)
+function AtbFrameStore.new(subclass_mt, l10n)
+    local self = AtbFrameStore:superClass().new(nil, subclass_mt or AtbFrameStore_mt)
 
-    self:registerControls(AtbStoreFrame.CONTROLS)
+    self:registerControls(AtbFrameStore.CONTROLS)
 
     self.l10n = l10n
     self.missionInfo = nil
@@ -24,13 +24,13 @@ function AtbStoreFrame.new(subclass_mt, l10n)
     return self
 end
 
-function AtbStoreFrame:copyAttributes(src)
-    AtbStoreFrame:superClass().copyAttributes(self, src)
+function AtbFrameStore:copyAttributes(src)
+    AtbFrameStore:superClass().copyAttributes(self, src)
 
     self.l10n = src.l10n
 end
 
-function AtbStoreFrame:initialize()
+function AtbFrameStore:initialize()
     self.backButtonInfo = {
         inputAction = InputAction.MENU_BACK
     }
@@ -54,12 +54,12 @@ function AtbStoreFrame:initialize()
     self.storeCloseTime:setTexts(times)
 end
 
-function AtbStoreFrame:onFrameOpen(element)
-    AtbStoreFrame:superClass().onFrameOpen(self)
+function AtbFrameStore:onFrameOpen(element)
+    AtbFrameStore:superClass().onFrameOpen(self)
     self:updateSettings()
 end
 
-function AtbStoreFrame:updateSettings()
+function AtbFrameStore:updateSettings()
     for element, settingsKey in pairs(self.checkboxMapping) do
         element:setIsChecked(g_atb.settings:getValue(settingsKey))
     end
@@ -74,7 +74,7 @@ function AtbStoreFrame:updateSettings()
     end
 end
 
-function AtbStoreFrame:onClickCheckbox(state, element)
+function AtbFrameStore:onClickCheckbox(state, element)
     local settingsKey = self.checkboxMapping[element]
 
     if settingsKey ~= nil then
@@ -84,7 +84,7 @@ function AtbStoreFrame:onClickCheckbox(state, element)
     end
 end
 
-function AtbStoreFrame:onEnterPressed(element)
+function AtbFrameStore:onEnterPressed(element)
     local settingsKey = self.inputNumericMapping[element]
     if settingsKey ~= nil then
         local value = tonumber(element.text)
@@ -98,12 +98,12 @@ function AtbStoreFrame:onEnterPressed(element)
         value = math.min(value, AtbSettings.MAX_MONEY)
 
         -- min loan must be lower than max loan
-        if element.id == AtbStoreFrame.CONTROLS.FARMS_LOAN_MIN then
+        if element.id == AtbFrameStore.CONTROLS.FARMS_LOAN_MIN then
             value = math.min(value, tonumber(self.farmsLoanMax.text))
         end
 
         -- max loan must be higer than min loan
-        if element.id == AtbStoreFrame.CONTROLS.FARMS_LOAN_MAX then
+        if element.id == AtbFrameStore.CONTROLS.FARMS_LOAN_MAX then
             value = math.max(value, tonumber(self.farmsLoanMin.text))
         end
 
@@ -114,7 +114,7 @@ function AtbStoreFrame:onEnterPressed(element)
     end
 end
 
-function AtbStoreFrame:onEscPressed(element)
+function AtbFrameStore:onEscPressed(element)
     local settingsKey = self.inputNumericMapping[element]
 
     if settingsKey ~= nil then
@@ -123,14 +123,14 @@ function AtbStoreFrame:onEscPressed(element)
     end
 end
 
-function AtbStoreFrame:onClickTime(state, element)
+function AtbFrameStore:onClickTime(state, element)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then
         local value = state - 1
 
         -- opening must be before closing
-        if element.id == AtbStoreFrame.CONTROLS.STORE_OPEN_TIME then
+        if element.id == AtbFrameStore.CONTROLS.STORE_OPEN_TIME then
             if state == 25 then
                 value = math.min(self.storeCloseTime.state - 2, AtbSettings.MAX_TIME)
             elseif state >= self.storeCloseTime.state then
@@ -139,7 +139,7 @@ function AtbStoreFrame:onClickTime(state, element)
         end
 
         -- closing must be after opening
-        if element.id == AtbStoreFrame.CONTROLS.STORE_CLOSE_TIME then
+        if element.id == AtbFrameStore.CONTROLS.STORE_CLOSE_TIME then
             if state == self.storeOpenTime.state then
                 value = math.max(self.storeOpenTime.state, AtbSettings.MAX_TIME)
             elseif state <= self.storeOpenTime.state then
@@ -157,7 +157,7 @@ function AtbStoreFrame:onClickTime(state, element)
     end
 end
 
-function AtbStoreFrame:onClickMultiOption(state, element)
+function AtbFrameStore:onClickMultiOption(state, element)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then

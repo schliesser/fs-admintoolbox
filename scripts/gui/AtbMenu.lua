@@ -1,23 +1,22 @@
-AtbTabbedMenu = {}
-local AtbTabbedMenu_mt = Class(AtbTabbedMenu, TabbedMenu)
+AtbMenu = {}
+local AtbMenu_mt = Class(AtbMenu, TabbedMenu)
 
-AtbTabbedMenu.CONTROLS = {
+AtbMenu.CONTROLS = {
     "pageAtbGeneral",
     "background"
 }
 
-AtbTabbedMenu.TAB_UV = {
+AtbMenu.TAB_UV = {
     GENERAL = {715, 0, 65, 65},
-    TEST = {0, 65, 65, 65},
     FARMS = {260, 65, 65, 65},
     USERS = {650, 65, 65, 65},
-    STORE = {260, 0, 65, 65},
+    STORE = {325, 0, 65, 65},
 }
 
-function AtbTabbedMenu.new(target, messageCenter, l10n, inputManager)
-    local self = AtbTabbedMenu:superClass().new(target, AtbTabbedMenu_mt, messageCenter, l10n, inputManager)
+function AtbMenu.new(target, messageCenter, l10n, inputManager)
+    local self = AtbMenu:superClass().new(target, AtbMenu_mt, messageCenter, l10n, inputManager)
 
-    self:registerControls(AtbTabbedMenu.CONTROLS)
+    self:registerControls(AtbMenu.CONTROLS)
 
     self.pageSetupIndex = 1
     self.allowPageSetup = false
@@ -26,22 +25,22 @@ function AtbTabbedMenu.new(target, messageCenter, l10n, inputManager)
     return self
 end
 
-function AtbTabbedMenu:onGuiSetupFinished()
-    AtbTabbedMenu:superClass().onGuiSetupFinished(self)
+function AtbMenu:onGuiSetupFinished()
+    AtbMenu:superClass().onGuiSetupFinished(self)
 
     self.clickBackCallback = self:makeSelfCallback(self.onButtonBack)
     self:setupMenuPages()
 end
 
-function AtbTabbedMenu:setupMenuPages()
+function AtbMenu:setupMenuPages()
     self.pageIndex = 1
     self.allowPageSetup = true
-    self:setupPage(self.pageAtbGeneral, AtbTabbedMenu.TAB_UV.GENERAL)
-    self:setupPage(self.pageAtbStore, AtbTabbedMenu.TAB_UV.STORE)
+    self:setupPage(self.pageAtbGeneral, AtbMenu.TAB_UV.GENERAL)
+    self:setupPage(self.pageAtbStore, AtbMenu.TAB_UV.STORE)
     self.allowPageSetup = false
 end
 
-function AtbTabbedMenu:setupPage(page, icon)
+function AtbMenu:setupPage(page, icon)
     if page ~= nil and self.allowPageSetup then
         -- Call initialize method from page
         page:initialize()
@@ -56,13 +55,13 @@ function AtbTabbedMenu:setupPage(page, icon)
     end
 end
 
-function AtbTabbedMenu:setupMenuButtonInfo()
-    AtbTabbedMenu:superClass().setupMenuButtonInfo(self)
+function AtbMenu:setupMenuButtonInfo()
+    AtbMenu:superClass().setupMenuButtonInfo(self)
     local onButtonBackFunction = self:makeSelfCallback(self.onButtonBack)
 
     self.backButtonInfo = {
         inputAction = InputAction.MENU_BACK,
-        text = self.l10n:getText(AtbTabbedMenu.L10N_SYMBOL.BUTTON_BACK),
+        text = self.l10n:getText(AtbMenu.L10N_SYMBOL.BUTTON_BACK),
         callback = onButtonBackFunction
     }
 
@@ -75,12 +74,12 @@ function AtbTabbedMenu:setupMenuButtonInfo()
     }
 end
 
-function AtbTabbedMenu:exitMenu()
+function AtbMenu:exitMenu()
     g_atb:applySettings()
 
-    AtbTabbedMenu:superClass().exitMenu(self)
+    AtbMenu:superClass().exitMenu(self)
 end
 
-AtbTabbedMenu.L10N_SYMBOL = {
+AtbMenu.L10N_SYMBOL = {
     BUTTON_BACK = "button_back"
 }

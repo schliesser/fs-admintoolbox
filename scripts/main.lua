@@ -42,14 +42,14 @@ function AdminToolBox:load()
     self.settings = AtbSettings.new(nil)
 
     if self.isClient then
-        local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
-        local generalFrame = AtbGeneralFrame.new(nil, g_i18n)
-        local storeFrame = AtbStoreFrame.new(nil, g_i18n)
+        local atbMenu = AtbMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
+        local generalFrame = AtbFrameGeneral.new(nil, g_i18n)
+        local storeFrame = AtbFrameStore.new(nil, g_i18n)
 
         if g_gui ~= nil then
-            g_gui:loadGui(self.baseDirectory .. "gui/AtbGeneralFrame.xml", "AtbGeneralFrame", generalFrame, true)
-            g_gui:loadGui(self.baseDirectory .. "gui/AtbStoreFrame.xml", "AtbStoreFrame", storeFrame, true)
-            g_gui:loadGui(self.baseDirectory .. "gui/AtbTabbedMenu.xml", "AtbMenu", atbMenu)
+            g_gui:loadGui(self.baseDirectory .. "gui/AtbFrameGeneral.xml", "AtbFrameGeneral", generalFrame, true)
+            g_gui:loadGui(self.baseDirectory .. "gui/AtbFrameStore.xml", "AtbFrameStore", storeFrame, true)
+            g_gui:loadGui(self.baseDirectory .. "gui/AtbMenu.xml", "AtbMenu", atbMenu)
         end
     end
 
@@ -82,7 +82,8 @@ function AdminToolBox:initFunctionOverridesOnStartup()
     ShopConfigScreen.updateButtons = Utils.prependedFunction(ShopConfigScreen.updateButtons, AtbOverrides.storeLease)
 
     -- Enable/Disable missions vehicle leasing
-    AbstractFieldMission.hasLeasableVehicles = Utils.overwrittenFunction(AbstractFieldMission.hasLeasableVehicles, AtbOverrides.missionLease)
+    AbstractFieldMission.hasLeasableVehicles = Utils.overwrittenFunction(AbstractFieldMission.hasLeasableVehicles,
+        AtbOverrides.missionLease)
 
     -- Enable/Disable sleeping
     SleepManager.getCanSleep = Utils.overwrittenFunction(SleepManager.getCanSleep, AtbOverrides.getCanSleep)
@@ -116,7 +117,7 @@ function AdminToolBox:applySettings()
         end
 
         -- Override contract limit
-        MissionManager.ACTIVE_CONTRACT_LIMIT =  g_atb.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
+        MissionManager.ACTIVE_CONTRACT_LIMIT = g_atb.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
     end
 
     -- Override farm loan settings
@@ -159,9 +160,9 @@ local modDir = g_currentModDirectory
 source(modDir .. "scripts/AtbSettings.lua");
 source(modDir .. "scripts/AtbOverrides.lua");
 source(modDir .. "scripts/events/SaveAtbSettingsEvent.lua");
-source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
-source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
-source(modDir .. "scripts/gui/AtbStoreFrame.lua");
+source(modDir .. "scripts/gui/AtbMenu.lua");
+source(modDir .. "scripts/gui/AtbFrameGeneral.lua");
+source(modDir .. "scripts/gui/AtbFrameStore.lua");
 
 function initAdminToolBox(name)
     if name == nil then
@@ -177,11 +178,15 @@ function initAdminToolBox(name)
             getfenv(0)["g_atb"] = atb
 
             FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, loadMapFinished)
-            FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents, registerActionEvents)
-            FSBaseMission.onConnectionFinishedLoading = Utils.appendedFunction(FSBaseMission.onConnectionFinishedLoading, onConnectionFinishedLoading)
+            FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents,
+                registerActionEvents)
+            FSBaseMission.onConnectionFinishedLoading = Utils.appendedFunction(
+                FSBaseMission.onConnectionFinishedLoading, onConnectionFinishedLoading)
             FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
-            Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, loadMission00Finished)
-            BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents, unregisterActionEvents)
+            Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished,
+                loadMission00Finished)
+            BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents,
+                unregisterActionEvents)
         end
     end
 end
@@ -197,7 +202,8 @@ end
 function registerActionEvents()
     if g_dedicatedServerInfo == nil and g_atb ~= nil then
         -- Menu Open
-        local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_atb, g_atb.onInputOpenMenu, false, true, false, true)
+        local _, eventIdOpenMenu = g_inputBinding:registerActionEvent(InputAction.ATB_MENU, g_atb,
+            g_atb.onInputOpenMenu, false, true, false, true)
         if not g_atb.isServer and not g_currentMission.isMasterUser then
             g_inputBinding:setActionEventTextVisibility(eventIdOpenMenu, false) -- Hide from help menu
         end
@@ -212,13 +218,13 @@ function unregisterActionEvents()
 end
 
 function saveToXMLFile(missionInfo)
-    if g_atb ~= nil and g_atb.settings ~=nil then
+    if g_atb ~= nil and g_atb.settings ~= nil then
         g_atb.settings:saveToXMLFile()
     end
 end
 
 function loadMission00Finished(mission)
-    if mission:getIsServer() and  g_atb ~= nil and g_atb.xmlPath ~= nil and fileExists(g_atb.xmlPath) then
+    if mission:getIsServer() and g_atb ~= nil and g_atb.xmlPath ~= nil and fileExists(g_atb.xmlPath) then
         local xmlFile = loadXMLFile("AdminToolBoxXML", g_atb.xmlPath)
         if xmlFile ~= nil then
             g_atb.settings:loadFromXML(xmlFile)
@@ -228,7 +234,7 @@ function loadMission00Finished(mission)
     g_atb:applySettings()
 end
 
-function onConnectionFinishedLoading(mission, connection, x,y,z, viewDistanceCoeff)
+function onConnectionFinishedLoading(mission, connection, x, y, z, viewDistanceCoeff)
     if g_atb ~= nil and connection ~= nil then
         connection:sendEvent(SaveAtbSettingsEvent.new())
     end

@@ -1,6 +1,6 @@
-AtbGeneralFrame = {}
-local AtbGeneralFrame_mt = Class(AtbGeneralFrame, TabbedMenuFrameElement)
-AtbGeneralFrame.CONTROLS = {
+AtbFrameGeneral = {}
+local AtbFrameGeneral_mt = Class(AtbFrameGeneral, TabbedMenuFrameElement)
+AtbFrameGeneral.CONTROLS = {
     SETTINGS_CONTAINER = "settingsContainer",
     BOX_LAYOUT = "boxLayout",
     AI_WORKER_COUNT = "aiWorkerCount",
@@ -12,10 +12,10 @@ AtbGeneralFrame.CONTROLS = {
     MISSIONS_LEASING = "missionsLeasing"
 }
 
-function AtbGeneralFrame.new(subclass_mt, l10n)
-    local self = AtbGeneralFrame:superClass().new(nil, subclass_mt or AtbGeneralFrame_mt)
+function AtbFrameGeneral.new(subclass_mt, l10n)
+    local self = AtbFrameGeneral:superClass().new(nil, subclass_mt or AtbFrameGeneral_mt)
 
-    self:registerControls(AtbGeneralFrame.CONTROLS)
+    self:registerControls(AtbFrameGeneral.CONTROLS)
 
     self.l10n = l10n
     self.missionInfo = nil
@@ -27,13 +27,13 @@ function AtbGeneralFrame.new(subclass_mt, l10n)
     return self
 end
 
-function AtbGeneralFrame:copyAttributes(src)
-    AtbGeneralFrame:superClass().copyAttributes(self, src)
+function AtbFrameGeneral:copyAttributes(src)
+    AtbFrameGeneral:superClass().copyAttributes(self, src)
 
     self.l10n = src.l10n
 end
 
-function AtbGeneralFrame:initialize()
+function AtbFrameGeneral:initialize()
     self.backButtonInfo = {
         inputAction = InputAction.MENU_BACK
     }
@@ -68,12 +68,12 @@ function AtbGeneralFrame:initialize()
     self.missionsContractLimit:setTexts(missions)
 end
 
-function AtbGeneralFrame:onFrameOpen(element)
-    AtbGeneralFrame:superClass().onFrameOpen(self)
+function AtbFrameGeneral:onFrameOpen(element)
+    AtbFrameGeneral:superClass().onFrameOpen(self)
     self:updateSettings()
 end
 
-function AtbGeneralFrame:updateSettings()
+function AtbFrameGeneral:updateSettings()
     for element, settingsKey in pairs(self.checkboxMapping) do
         element:setIsChecked(g_atb.settings:getValue(settingsKey))
     end
@@ -88,7 +88,7 @@ function AtbGeneralFrame:updateSettings()
     end
 end
 
-function AtbGeneralFrame:onClickCheckbox(state, element)
+function AtbFrameGeneral:onClickCheckbox(state, element)
     local settingsKey = self.checkboxMapping[element]
 
     if settingsKey ~= nil then
@@ -98,7 +98,7 @@ function AtbGeneralFrame:onClickCheckbox(state, element)
     end
 end
 
-function AtbGeneralFrame:onEnterPressed(element)
+function AtbFrameGeneral:onEnterPressed(element)
     local settingsKey = self.inputNumericMapping[element]
     if settingsKey ~= nil then
         local value = tonumber(element.text)
@@ -112,12 +112,12 @@ function AtbGeneralFrame:onEnterPressed(element)
         value = math.min(value, AtbSettings.MAX_MONEY)
 
         -- min loan must be lower than max loan
-        if element.id == AtbGeneralFrame.CONTROLS.FARMS_LOAN_MIN then
+        if element.id == AtbFrameGeneral.CONTROLS.FARMS_LOAN_MIN then
             value = math.min(value, tonumber(self.farmsLoanMax.text))
         end
 
         -- max loan must be higer than min loan
-        if element.id == AtbGeneralFrame.CONTROLS.FARMS_LOAN_MAX then
+        if element.id == AtbFrameGeneral.CONTROLS.FARMS_LOAN_MAX then
             value = math.max(value, tonumber(self.farmsLoanMin.text))
         end
 
@@ -128,7 +128,7 @@ function AtbGeneralFrame:onEnterPressed(element)
     end
 end
 
-function AtbGeneralFrame:onEscPressed(element)
+function AtbFrameGeneral:onEscPressed(element)
     local settingsKey = self.inputNumericMapping[element]
 
     if settingsKey ~= nil then
@@ -137,7 +137,7 @@ function AtbGeneralFrame:onEscPressed(element)
     end
 end
 
-function AtbGeneralFrame:onClickMultiOption(state, element)
+function AtbFrameGeneral:onClickMultiOption(state, element)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then
