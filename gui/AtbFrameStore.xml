@@ -16,7 +16,7 @@
 
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_store" />
 
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="storeActive">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="atbOnClickCheckbox" id="storeActive">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -25,7 +25,7 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeActive" />
                 </GuiElement>
 
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickTime" id="storeOpenTime">
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="atbOnClickTime" id="storeOpenTime">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight" />
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -34,7 +34,7 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeOpenTime" />
                 </GuiElement>
 
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickTime" id="storeCloseTime">
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="atbOnClickTime" id="storeCloseTime">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight" />
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -43,7 +43,7 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_storeCloseTime" />
                 </GuiElement>
 
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="storeLeasing">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="atbOnClickCheckbox" id="storeLeasing">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />

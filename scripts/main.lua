@@ -43,13 +43,18 @@ function AdminToolBox:load()
 
     if self.isClient then
         local atbMenu = AtbMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
+        local atbFrames = AtbFrames.new()
         local generalFrame = AtbFrameGeneral.new(nil, g_i18n)
         local storeFrame = AtbFrameStore.new(nil, g_i18n)
 
         if g_gui ~= nil then
-            g_gui:loadGui(self.baseDirectory .. "gui/AtbFrameGeneral.xml", "AtbFrameGeneral", generalFrame, true)
-            g_gui:loadGui(self.baseDirectory .. "gui/AtbFrameStore.xml", "AtbFrameStore", storeFrame, true)
-            g_gui:loadGui(self.baseDirectory .. "gui/AtbMenu.xml", "AtbMenu", atbMenu)
+            g_gui:loadGui(Utils.getFilename("gui/AtbFrameGeneral.xml", self.baseDirectory), "AtbFrameGeneral", generalFrame, true)
+            g_gui:loadGui(Utils.getFilename("gui/AtbFrameStore.xml", self.baseDirectory), "AtbFrameStore", storeFrame, true)
+            g_gui:loadGui(Utils.getFilename("gui/AtbMenu.xml", self.baseDirectory), "AtbMenu", atbMenu)
+            g_gui:loadGui(Utils.getFilename("gui/AtbFrames.xml", self.baseDirectory), "AtbFrames", atbFrames)
+
+            self:addInGameMenuFrame(atbFrames.pageAtbStore, AtbFrames.TAB_UV.STORE)
+            self:addInGameMenuFrame(atbFrames.pageAtbGeneral, AtbFrames.TAB_UV.GENERAL)
         end
     end
 
@@ -68,6 +73,23 @@ function AdminToolBox:onInputOpenMenu(_, inputValue)
         end
     end
 end
+
+function AdminToolBox:addInGameMenuFrame(frame, icon)
+    local inGameMenu = g_currentMission.inGameMenu
+
+	if frame ~= nil then
+		local pagingElement = inGameMenu.pagingElement
+		local index = pagingElement:getPageIndexByElement(inGameMenu.pageSettingsGeneral) + 1
+
+		PagingElement:superClass().addElement(pagingElement, frame)
+		pagingElement:addPage(string.upper(frame.name), frame, 'MyTitle', index)
+
+		inGameMenu:registerPage(frame, index, inGameMenu:makeIsGeneralSettingsEnabledPredicate())
+		inGameMenu:addPageTab(frame, g_iconsUIFilename, GuiUtils.getUVs(icon))
+		inGameMenu[frame.name] = frame
+	end
+end
+
 
 function AdminToolBox:update(dt)
     if not self.isEnabled then
@@ -161,6 +183,7 @@ source(modDir .. "scripts/AtbSettings.lua");
 source(modDir .. "scripts/AtbOverrides.lua");
 source(modDir .. "scripts/events/SaveAtbSettingsEvent.lua");
 source(modDir .. "scripts/gui/AtbMenu.lua");
+source(modDir .. "scripts/gui/AtbFrames.lua");
 source(modDir .. "scripts/gui/AtbFrameGeneral.lua");
 source(modDir .. "scripts/gui/AtbFrameStore.lua");
 

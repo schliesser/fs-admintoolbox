@@ -16,7 +16,7 @@
 
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_general" />
 
-                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="aiWorkerCount">
+                <GuiElement type="multiTextOption" profile="multiTextOptionSettings" onClick="atbOnClickMultiOption" id="aiWorkerCount">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -25,7 +25,7 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_worker" />
                 </GuiElement>
 
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableVehicleTabbing">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="atbOnClickCheckbox" id="enableVehicleTabbing">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -34,7 +34,7 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_vtab" />
                 </GuiElement>
 
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="enableSleeping">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="atbOnClickCheckbox" id="enableSleeping">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -46,20 +46,20 @@
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_farms" />
 
                 <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
-                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMin" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" />
+                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMin" onEscPressed="atbOnEscPressed" onEnterPressed="atbOnEnterPressed" imeKeyboardType="numeric" />
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_loanMin"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_loanMin" />
                 </GuiElement>
 
                 <GuiElement type="empty" profile="ingameMenuGameSettingsTextInputWrapper">
-                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMax" onEscPressed="onEscPressed" onEnterPressed="onEnterPressed" imeKeyboardType="numeric" />
+                    <GuiElement type="textInput" profile="ingameMenuGameSettingsTextInput" id="farmsLoanMax" onEscPressed="atbOnEscPressed" onEnterPressed="atbOnEnterPressed" imeKeyboardType="numeric" />
                     <GuiElement type="text" profile="multiTextOptionSettingsTitle" text="$l10n_ATB_title_loanMax"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_loanMax" />
                 </GuiElement>
 
                 <GuiElement type="text" profile="settingsMenuSubtitle" text="$l10n_ATB_sub_missions" />
 
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickMultiOption" id="missionsContractLimit">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="atbOnClickMultiOption" id="missionsContractLimit">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />
@@ -68,7 +68,7 @@
                     <GuiElement type="text" profile="multiTextOptionSettingsTooltip" text="$l10n_ATB_tip_contractLimit" />
                 </GuiElement>
 
-                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="onClickCheckbox" id="missionsLeasing">
+                <GuiElement type="checkedOption" profile="multiTextOptionSettings" onClick="atbOnClickCheckbox" id="missionsLeasing">
                     <GuiElement type="button" profile="multiTextOptionSettingsLeft" />
                     <GuiElement type="button" profile="multiTextOptionSettingsRight"/>
                     <GuiElement type="text" profile="multiTextOptionSettingsText" />

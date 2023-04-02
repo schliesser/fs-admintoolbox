@@ -74,56 +74,17 @@ function AtbFrameStore:updateSettings()
     end
 end
 
-function AtbFrameStore:onClickCheckbox(state, element)
+function AtbFrameStore:atbOnClickCheckbox(state, element)
     local settingsKey = self.checkboxMapping[element]
 
     if settingsKey ~= nil then
         g_atb.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED)
     else
-        print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
+        print("ATB Store Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
     end
 end
 
-function AtbFrameStore:onEnterPressed(element)
-    local settingsKey = self.inputNumericMapping[element]
-    if settingsKey ~= nil then
-        local value = tonumber(element.text)
-
-        -- Reset on empty value to current value
-        if value == nil then
-            value = g_atb.settings:getValue(settingsKey)
-        end
-
-        -- loan must be lower than max money constant
-        value = math.min(value, AtbSettings.MAX_MONEY)
-
-        -- min loan must be lower than max loan
-        if element.id == AtbFrameStore.CONTROLS.FARMS_LOAN_MIN then
-            value = math.min(value, tonumber(self.farmsLoanMax.text))
-        end
-
-        -- max loan must be higer than min loan
-        if element.id == AtbFrameStore.CONTROLS.FARMS_LOAN_MAX then
-            value = math.max(value, tonumber(self.farmsLoanMin.text))
-        end
-
-        element:setText(tostring(value))
-        g_atb.settings:setValue(settingsKey, value)
-    else
-        print("Warning: Invalid settings input event or key configuration for element " .. element:toString())
-    end
-end
-
-function AtbFrameStore:onEscPressed(element)
-    local settingsKey = self.inputNumericMapping[element]
-
-    if settingsKey ~= nil then
-        -- Reset value
-        element:setText(tostring(g_atb.settings:getValue(settingsKey)))
-    end
-end
-
-function AtbFrameStore:onClickTime(state, element)
+function AtbFrameStore:atbOnClickTime(state, element)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then
@@ -153,17 +114,17 @@ function AtbFrameStore:onClickTime(state, element)
         -- save value
         g_atb.settings:setValue(settingsKey, value)
     else
-        print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
+        print("ATB Store Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
     end
 end
 
-function AtbFrameStore:onClickMultiOption(state, element)
+function AtbFrameStore:atbOnClickMultiOption(state, element)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then
         local value = state - 1
         g_atb.settings:setValue(settingsKey, value)
     else
-        print("Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
+        print("ATB Store Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
     end
 end

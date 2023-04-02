@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<GUI>
+	<GuiElement type="bitmap" profile="uiElementContainerFullScreenSpanning">
+		<GuiElement type="paging" profile="uiInGameMenuPaging">
+            <!-- Admin Tools pages -->
+            <GuiElement type="frameReference" ref="AtbGeneral" name="AtbGeneral" id="pageAtbGeneral"/>
+            <GuiElement type="frameReference" ref="AtbStore" name="AtbStore" id="pageAtbStore"/>
+		</GuiElement>
+	</GuiElement>
+</GUI>

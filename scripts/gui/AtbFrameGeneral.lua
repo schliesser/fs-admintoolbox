@@ -88,17 +88,17 @@ function AtbFrameGeneral:updateSettings()
     end
 end
 
-function AtbFrameGeneral:onClickCheckbox(state, element)
+function AtbFrameGeneral:atbOnClickCheckbox(state, element)
     local settingsKey = self.checkboxMapping[element]
 
     if settingsKey ~= nil then
         g_atb.settings:setValue(settingsKey, state == CheckedOptionElement.STATE_CHECKED)
     else
-        print("Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
+        print("ATB General Warning: Invalid settings checkbox event or key configuration for element " .. element:toString())
     end
 end
 
-function AtbFrameGeneral:onEnterPressed(element)
+function AtbFrameGeneral:atbOnEnterPressed(element)
     local settingsKey = self.inputNumericMapping[element]
     if settingsKey ~= nil then
         local value = tonumber(element.text)
@@ -124,11 +124,11 @@ function AtbFrameGeneral:onEnterPressed(element)
         element:setText(tostring(value))
         g_atb.settings:setValue(settingsKey, value)
     else
-        print("Warning: Invalid settings input event or key configuration for element " .. element:toString())
+        print("ATB General Warning: Invalid settings input event or key configuration for element " .. element:toString())
     end
 end
 
-function AtbFrameGeneral:onEscPressed(element)
+function AtbFrameGeneral:atbOnEscPressed(element)
     local settingsKey = self.inputNumericMapping[element]
 
     if settingsKey ~= nil then
@@ -137,13 +137,13 @@ function AtbFrameGeneral:onEscPressed(element)
     end
 end
 
-function AtbFrameGeneral:onClickMultiOption(state, element)
+function AtbFrameGeneral:atbOnClickMultiOption(state, element)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then
         local value = state - 1
         g_atb.settings:setValue(settingsKey, value)
     else
-        print("Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
+        print("ATB General Warning: Invalid settings multi option event or key configuration for element " .. element:toString())
     end
 end
