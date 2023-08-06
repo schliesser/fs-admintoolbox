@@ -43,21 +43,21 @@ function AtbGeneralFrame:initialize()
     }
 
     -- Add checkbox fields
-    self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.SETTING.VEHICLE_TABBING
-    self.checkboxMapping[self.enableSleeping] = AtbSettings.SETTING.GENERAL_SLEEP
-    self.checkboxMapping[self.storeActive] = AtbSettings.SETTING.STORE_ACTIVE
-    self.checkboxMapping[self.storeLeasing] = AtbSettings.SETTING.STORE_LEASING
-    self.checkboxMapping[self.missionsLeasing] = AtbSettings.SETTING.MISSIONS_LEASING
+    self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.VEHICLE_TABBING
+    self.checkboxMapping[self.enableSleeping] = AtbSettings.GENERAL_SLEEP
+    self.checkboxMapping[self.storeActive] = AtbSettings.STORE_ACTIVE
+    self.checkboxMapping[self.storeLeasing] = AtbSettings.STORE_LEASING
+    self.checkboxMapping[self.missionsLeasing] = AtbSettings.MISSIONS_LEASING
 
     -- Add input fields
-    self.inputNumericMapping[self.farmsLoanMin] = AtbSettings.SETTING.FARM_LOAN_MIN
-    self.inputNumericMapping[self.farmsLoanMax] = AtbSettings.SETTING.FARM_LOAN_MAX
+    self.inputNumericMapping[self.farmsLoanMin] = AtbSettings.FARM_LOAN_MIN
+    self.inputNumericMapping[self.farmsLoanMax] = AtbSettings.FARM_LOAN_MAX
 
     -- Add select fields
-    self.optionMapping[self.aiWorkerCount] = AtbSettings.SETTING.AI_WORKER_COUNT
-    self.optionMapping[self.storeOpenTime] = AtbSettings.SETTING.STORE_OPEN_TIME
-    self.optionMapping[self.storeCloseTime] = AtbSettings.SETTING.STORE_CLOSE_TIME
-    self.optionMapping[self.missionsContractLimit] = AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT
+    self.optionMapping[self.aiWorkerCount] = AtbSettings.AI_WORKER_COUNT
+    self.optionMapping[self.storeOpenTime] = AtbSettings.STORE_OPEN_TIME
+    self.optionMapping[self.storeCloseTime] = AtbSettings.STORE_CLOSE_TIME
+    self.optionMapping[self.missionsContractLimit] = AtbSettings.MISSIONS_CONTRACT_LIMIT
 
     -- Build workers select texts
     local workers = {}

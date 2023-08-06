@@ -14,14 +14,12 @@ You are not allowed to sell this or a modified version of the mod.
 AdminToolBox = {}
 local AdminToolBox_mt = Class(AdminToolBox)
 
-function AdminToolBox.new(isServer, isClient, customEnvironment, baseDirectory)
+function AdminToolBox.new(customMt, isServer, isClient, customEnvironment, baseDirectory)
     if g_atb ~= nil then
         return
     end
 
-    local self = {}
-    setmetatable(self, AdminToolBox_mt)
-
+    local self = setmetatable({}, customMt or AdminToolBox_mt)
     -- todo: read config file
     self.isServer = isServer
     self.isClient = isClient
@@ -40,6 +38,7 @@ end
 
 function AdminToolBox:load()
     self.settings = AtbSettings.new(nil)
+    self.gameSettingsFrame = AtbGameSettingsFrame.new(self)
 
     if self.isClient then
         local atbMenu = AtbTabbedMenu.new(nil, g_messageCenter, g_i18n, g_gui.inputManager)
@@ -94,17 +93,17 @@ end
 
 function AdminToolBox:applySettings()
     if not self.isEnabled then
-        print('ATB: Apply settings - disabled!!!!')
+        atbPrint('Apply settings - disabled!!!!')
         return
     end
 
-    print('ATB: Apply settings')
+    atbPrint('Apply settings')
 
     local farmChanged = false
 
     if g_currentMission ~= nil then
         -- Set number of AI workers
-        local aiWorkerCount = g_atb.settings:getValue(AtbSettings.SETTING.AI_WORKER_COUNT)
+        local aiWorkerCount = g_atb.settings:getValue(AtbSettings.AI_WORKER_COUNT)
         g_currentMission.maxNumHirables = aiWorkerCount
         -- Disable if number of AI workers is 0
         if aiWorkerCount == 0 then
@@ -114,16 +113,16 @@ function AdminToolBox:applySettings()
         end
 
         -- Override contract limit
-        MissionManager.ACTIVE_CONTRACT_LIMIT =  g_atb.settings:getValue(AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT)
+        MissionManager.ACTIVE_CONTRACT_LIMIT =  g_atb.settings:getValue(AtbSettings.MISSIONS_CONTRACT_LIMIT)
     end
 
     -- Override farm loan settings
-    local loanMin = g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MIN)
+    local loanMin = g_atb.settings:getValue(AtbSettings.FARM_LOAN_MIN)
     if loanMin ~= Farm.MIN_LOAN then
         Farm.MIN_LOAN = loanMin
     end
 
-    local loanMax = g_atb.settings:getValue(AtbSettings.SETTING.FARM_LOAN_MAX)
+    local loanMax = g_atb.settings:getValue(AtbSettings.FARM_LOAN_MAX)
     if loanMax ~= Farm.MAX_LOAN then
         Farm.MAX_LOAN = loanMax
     end
@@ -152,11 +151,11 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Initialize Admin Tool Box
 ----------------------------------------------------------------------------------------------------
-local atb = nil
 local modDir = g_currentModDirectory
 source(modDir .. "scripts/AtbSettings.lua");
 source(modDir .. "scripts/AtbOverrides.lua");
 source(modDir .. "scripts/events/SaveAtbSettingsEvent.lua");
+source(modDir .. "scripts/gui/AtbGameSettingsFrame.lua");
 source(modDir .. "scripts/gui/AtbTabbedMenu.lua");
 source(modDir .. "scripts/gui/AtbGeneralFrame.lua");
 
@@ -166,19 +165,19 @@ function initAdminToolBox(name)
     end
 
     if g_atb == nil then
+        -- Define global Admin Tools variable
+        g_atb = AdminToolBox.new(nil, g_server ~= nil, g_dedicatedServerInfo == nil, name, modDir)
 
-        atb = AdminToolBox.new(g_server ~= nil, g_dedicatedServerInfo == nil, name, modDir)
-        if atb ~= nil then
-            -- Define global Admin Tools variable
-            -- Doesn't work correctly in FS22 anymore, it's not accessible for other mods
-            getfenv(0)["g_atb"] = atb
-
+        if g_atb ~= nil then
+            atbPrint('g_atb defined')
             FSBaseMission.loadMapFinished = Utils.prependedFunction(FSBaseMission.loadMapFinished, loadMapFinished)
             FSBaseMission.registerActionEvents = Utils.appendedFunction(FSBaseMission.registerActionEvents, registerActionEvents)
             FSBaseMission.onConnectionFinishedLoading = Utils.appendedFunction(FSBaseMission.onConnectionFinishedLoading, onConnectionFinishedLoading)
             FSCareerMissionInfo.saveToXMLFile = Utils.appendedFunction(FSCareerMissionInfo.saveToXMLFile, saveToXMLFile)
             Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, loadMission00Finished)
             BaseMission.unregisterActionEvents = Utils.appendedFunction(BaseMission.unregisterActionEvents, unregisterActionEvents)
+            InGameMenuGameSettingsFrame.onFrameOpen = Utils.overwrittenFunction(InGameMenuGameSettingsFrame.onFrameOpen, AtbGameSettingsFrame.onFrameOpen)
+            InGameMenuGameSettingsFrame.onFrameClose = Utils.overwrittenFunction(InGameMenuGameSettingsFrame.onFrameClose, AtbGameSettingsFrame.onFrameClose)
         end
     end
 end
