@@ -109,40 +109,41 @@ function AtbGameSettingsFrame:onClickMultiOption(state, optionElement)
     end
 end
 
-function AtbGameSettingsFrame:onClickTimeOption(state, timeElement)
-    atbPrint('onClickTime ' .. tostring(state))
-
+function AtbGameSettingsFrame:onClickTimeOption(state, timeElement, reduceState)
     for i = 1, #self.settings do
         local setting = self.settings[i]
         if setting.element == timeElement then
             local value = state - 1
-            atbPrint('value ' .. tostring(value))
 
             -- opening must be before closing
-            if timeElement.name == AtbSettings.STORE_OPEN_TIME then
-                local closeTime = g_atb.settings:getValue(AtbSettings.STORE_CLOSE_TIME)
-                atbPrint('close time ' .. tostring(closeTime))
-                if state == 25 then
-                    value = math.min(closeTime - 2, AtbSettings.MAX_TIME)
-                elseif state >= closeTime then
-                    value = 0
+            if setting.name == AtbSettings.STORE_OPEN_TIME then
+                local closeTime = math.min(g_atb.settings:getValue(AtbSettings.STORE_CLOSE_TIME), AtbSettings.MAX_TIME)
+                if value >= closeTime then
+                    if reduceState then
+                        value = closeTime - 1
+                    else
+                        value = 0
+                    end
                 end
             end
 
             -- closing must be after opening
-            if timeElement.name == AtbSettings.STORE_CLOSE_TIME then
-                local openTime = g_atb.settings:getValue(AtbSettings.STORE_OPEN_TIME)
-                atbPrint('close time ' .. tostring(openTime))
-                if state == openTime then
-                    value = math.max(openTime, AtbSettings.MAX_TIME)
-                elseif state <= openTime then
-                    value = openTime
+            if setting.name == AtbSettings.STORE_CLOSE_TIME then
+                local openTime = math.max(g_atb.settings:getValue(AtbSettings.STORE_OPEN_TIME), 0)
+                if value <= openTime then
+                    if reduceState then
+                        value = AtbSettings.MAX_TIME
+                    else
+                        value = openTime + 1
+                    end
                 end
             end
 
             setting.state = value
+            timeElement:setState(value + 1)
 
             self:onSettingChanged(setting)
+            return
         end
     end
 end
