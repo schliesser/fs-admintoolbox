@@ -47,18 +47,7 @@ https://github.com/schliesser/fs-admintoolbox/
     <l10n filenamePrefix="l10n/l10n"/>
 
     <extraSourceFiles>
-        <sourceFile filename="scripts/debug.lua"/>
         <sourceFile filename="scripts/main.lua"/>
     </extraSourceFiles>
-
-    <inputBinding>
-        <actionBinding action="ATB_MENU">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_f9"/>
-        </actionBinding>
-    </inputBinding>
-
-    <actions>
-        <action name="ATB_MENU" category="SYSTEM" axisType="HALF" locked="true" displayCategory="GAME"/>
-    </actions>
 
 </modDesc>
