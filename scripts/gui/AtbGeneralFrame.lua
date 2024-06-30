@@ -38,26 +38,22 @@ function AtbGeneralFrame:copyAttributes(src)
 end
 
 function AtbGeneralFrame:initialize()
-    self.backButtonInfo = {
-        inputAction = InputAction.MENU_BACK
-    }
-
     -- Add checkbox fields
-    self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.SETTING.VEHICLE_TABBING
-    self.checkboxMapping[self.enableSleeping] = AtbSettings.SETTING.GENERAL_SLEEP
-    self.checkboxMapping[self.storeActive] = AtbSettings.SETTING.STORE_ACTIVE
-    self.checkboxMapping[self.storeLeasing] = AtbSettings.SETTING.STORE_LEASING
-    self.checkboxMapping[self.missionsLeasing] = AtbSettings.SETTING.MISSIONS_LEASING
+    self.checkboxMapping[self.enableVehicleTabbing] = AtbSettings.VEHICLE_TABBING
+    self.checkboxMapping[self.enableSleeping] = AtbSettings.GENERAL_SLEEP
+    self.checkboxMapping[self.storeActive] = AtbSettings.STORE_ACTIVE
+    self.checkboxMapping[self.storeLeasing] = AtbSettings.STORE_LEASING
+    self.checkboxMapping[self.missionsLeasing] = AtbSettings.MISSIONS_LEASING
 
     -- Add input fields
-    self.inputNumericMapping[self.farmsLoanMin] = AtbSettings.SETTING.FARM_LOAN_MIN
-    self.inputNumericMapping[self.farmsLoanMax] = AtbSettings.SETTING.FARM_LOAN_MAX
+    self.inputNumericMapping[self.farmsLoanMin] = AtbSettings.FARM_LOAN_MIN
+    self.inputNumericMapping[self.farmsLoanMax] = AtbSettings.FARM_LOAN_MAX
 
     -- Add select fields
-    self.optionMapping[self.aiWorkerCount] = AtbSettings.SETTING.AI_WORKER_COUNT
-    self.optionMapping[self.storeOpenTime] = AtbSettings.SETTING.STORE_OPEN_TIME
-    self.optionMapping[self.storeCloseTime] = AtbSettings.SETTING.STORE_CLOSE_TIME
-    self.optionMapping[self.missionsContractLimit] = AtbSettings.SETTING.MISSIONS_CONTRACT_LIMIT
+    self.optionMapping[self.aiWorkerCount] = AtbSettings.AI_WORKER_COUNT
+    self.optionMapping[self.storeOpenTime] = AtbSettings.STORE_OPEN_TIME
+    self.optionMapping[self.storeCloseTime] = AtbSettings.STORE_CLOSE_TIME
+    self.optionMapping[self.missionsContractLimit] = AtbSettings.MISSIONS_CONTRACT_LIMIT
 
     -- Build workers select texts
     local workers = {}
@@ -153,27 +149,31 @@ function AtbGeneralFrame:onEscPressed(element)
     end
 end
 
-function AtbGeneralFrame:onClickTime(state, element)
+function AtbGeneralFrame:onClickTime(state, element, reduceState)
     local settingsKey = self.optionMapping[element]
 
     if settingsKey ~= nil then
         local value = state - 1
 
-        -- opening must be before closing
         if element.id == AtbGeneralFrame.CONTROLS.STORE_OPEN_TIME then
-            if state == 25 then
-                value = math.min(self.storeCloseTime.state - 2, AtbSettings.MAX_TIME)
-            elseif state >= self.storeCloseTime.state then
-                value = 0
+            local closeTime = math.min(g_atb.settings:getValue(AtbSettings.STORE_CLOSE_TIME), AtbSettings.MAX_TIME)
+            -- opening must be before closing
+            if value >= closeTime then
+                if reduceState then
+                    value = closeTime - 1
+                else
+                    value = 0
+                end
             end
-        end
-
-        -- closing must be after opening
-        if element.id == AtbGeneralFrame.CONTROLS.STORE_CLOSE_TIME then
-            if state == self.storeOpenTime.state then
-                value = math.max(self.storeOpenTime.state, AtbSettings.MAX_TIME)
-            elseif state <= self.storeOpenTime.state then
-                value = self.storeOpenTime.state
+        elseif element.id == AtbGeneralFrame.CONTROLS.STORE_CLOSE_TIME then
+            local openTime = math.max(g_atb.settings:getValue(AtbSettings.STORE_OPEN_TIME), 0)
+            -- closing must be after opening
+            if value <= openTime then
+                if reduceState then
+                    value = AtbSettings.MAX_TIME
+                else
+                    value = openTime + 1
+                end
             end
         end
 

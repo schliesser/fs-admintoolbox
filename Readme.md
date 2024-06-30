@@ -12,16 +12,16 @@ For Bugreports please use: https://github.com/schliesser/fs-admintoolbox/issues
 
 - General
     - Number of AI workers
-    - Enable/Disable vehicle tabbing
-    - Enable/Disable sleeping
+    - Enable/disable vehicle tabbing
+    - Enable/disable sleeping
 - Store
-    - Enable/Disable store
+    - Enable/disable store
     - Set store opening & closing hours
-    - Enable/Disable vehicle leasing in the store
+    - Enable/disable vehicle leasing in the store
 - Farms
     - Set credit limit
 - Missions
-    - Enable/Disable vehicle renting for missions
+    - Enable/disable vehicle renting for missions
     - Set max parallel missions per farm
 
 ## Ideas / Upcomming features
@@ -29,10 +29,12 @@ For Bugreports please use: https://github.com/schliesser/fs-admintoolbox/issues
 - General
     - Set max time speed
     - Set player running speed
+    - Enable/disable teleportation
+    - Set teleportation costs
 - Store
     - Restrict store to selected farms (idea)
 - Farms
-    - Add/Remove money from farms
+    - Add/remove money from farms
     - Add/remove money daily (e.g. taxes/bonuses)
     - Loan intrest rate
     - Max farm count
@@ -42,7 +44,7 @@ For Bugreports please use: https://github.com/schliesser/fs-admintoolbox/issues
     - Mission update interval
     - Max available missions
     - Straw collectible
-    - Enable/Disable missions
+    - Enable/disable missions
 - AI
     - Costs
 - Productions
